@@ -1095,6 +1095,12 @@ definitions:
                 example: false
                 type: boolean
                 x-go-name: Obfuscate
+            permission_type:
+                description: |-
+                    Permission type of this entry (block, allow).
+                    Only set for domain permission drafts.
+                type: string
+                x-go-name: PermissionType
             private_comment:
                 description: Private comment for this permission entry, visible to this instance's admins only.
                 example: they are poopoo
@@ -1123,6 +1129,73 @@ definitions:
         title: DomainPermission represents a permission applied to one domain (explicit block/allow).
         type: object
         x-go-name: DomainPermission
+        x-go-package: github.com/superseriousbusiness/gotosocial/internal/api/model
+    domainPermissionSubscription:
+        properties:
+            as_draft:
+                description: If true, domain permissions arising from this subscription will be created as drafts that must be approved by a moderator to take effect. If false, domain permissions from this subscription will come into force immediately.
+                example: true
+                type: boolean
+                x-go-name: AsDraft
+            content_type:
+                description: MIME content type to expect at URI.
+                example: text/csv
+                type: string
+                x-go-name: ContentType
+            count:
+                description: Count of domain permission entries discovered at URI.
+                example: 53
+                format: uint64
+                readOnly: true
+                type: integer
+                x-go-name: Count
+            created_by_account_id:
+                description: ID of the account that created this subscription.
+                example: 01FBW21XJA09XYX51KV5JVBW0F
+                readOnly: true
+                type: string
+                x-go-name: CreatedByAccountID
+            error:
+                description: If most recent fetch attempt failed, this field will contain an error message related to the fetch attempt.
+                example: Oopsie doopsie, we made a fucky wucky.
+                readOnly: true
+                type: string
+                x-go-name: Error
+            fetch_password:
+                description: (Optional) password to set for basic auth when doing a fetch of URI.
+                example: admin123
+                type: string
+                x-go-name: FetchPassword
+            fetch_username:
+                description: (Optional) username to set for basic auth when doing a fetch of URI.
+                example: admin123
+                type: string
+                x-go-name: FetchUsername
+            fetched_at:
+                description: Time at which the most recent fetch was attempted (ISO 8601 Datetime).
+                example: "2021-07-30T09:20:25+00:00"
+                readOnly: true
+                type: string
+                x-go-name: FetchedAt
+            id:
+                description: The ID of the domain permission subscription.
+                example: 01FBW21XJA09XYX51KV5JVBW0F
+                readOnly: true
+                type: string
+                x-go-name: ID
+            permission_type:
+                description: The type of domain permission subscription (allow, block).
+                example: block
+                type: string
+                x-go-name: PermissionType
+            uri:
+                description: URI to call in order to fetch the permissions list.
+                example: https://www.example.org/blocklists/list1.csv
+                type: string
+                x-go-name: URI
+        title: DomainPermissionSubscription represents an auto-refreshing subscription to a list of domain permissions (allows, blocks).
+        type: object
+        x-go-name: DomainPermissionSubscription
         x-go-package: github.com/superseriousbusiness/gotosocial/internal/api/model
     emoji:
         properties:
@@ -5570,6 +5643,249 @@ paths:
                 - OAuth2 Bearer:
                     - admin
             summary: Force expiry of cached public keys for all accounts on the given domain stored in your database.
+            tags:
+                - admin
+    /api/v1/admin/domain_permission_drafts:
+        get:
+            description: |-
+                The drafts will be returned in descending chronological order (newest first), with sequential IDs (bigger = newer).
+
+                The next and previous queries can be parsed from the returned Link header.
+
+                Example:
+
+                ```
+                <https://example.org/api/v1/admin/domain_permission_drafts?limit=20&max_id=01FC0SKA48HNSVR6YKZCQGS2V8>; rel="next", <https://example.org/api/v1/admin/domain_permission_drafts?limit=20&min_id=01FC0SKW5JK2Q4EVAV2B462YY0>; rel="prev"
+                ````
+            operationId: domainPermissionDraftsGet
+            parameters:
+                - description: Show only drafts created by the given subscription ID.
+                  in: query
+                  name: subscription_id
+                  type: string
+                - description: Return only drafts that target the given domain.
+                  in: query
+                  name: domain
+                  type: string
+                - description: Filter on "block" or "allow" type drafts.
+                  in: query
+                  name: permission_type
+                  type: string
+                - description: Return only items *OLDER* than the given max ID (for paging downwards). The item with the specified ID will not be included in the response.
+                  in: query
+                  name: max_id
+                  type: string
+                - description: Return only items *NEWER* than the given since ID. The item with the specified ID will not be included in the response.
+                  in: query
+                  name: since_id
+                  type: string
+                - description: Return only items immediately *NEWER* than the given min ID (for paging upwards). The item with the specified ID will not be included in the response.
+                  in: query
+                  name: min_id
+                  type: string
+                - default: 20
+                  description: Number of items to return.
+                  in: query
+                  maximum: 100
+                  minimum: 1
+                  name: limit
+                  type: integer
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: Domain permission drafts.
+                    headers:
+                        Link:
+                            description: Links to the next and previous queries.
+                            type: string
+                    schema:
+                        items:
+                            $ref: '#/definitions/domainPermission'
+                        type: array
+                "400":
+                    description: bad request
+                "401":
+                    description: unauthorized
+                "403":
+                    description: forbidden
+                "404":
+                    description: not found
+                "406":
+                    description: not acceptable
+                "500":
+                    description: internal server error
+            security:
+                - OAuth2 Bearer:
+                    - admin
+            summary: View domain permission drafts.
+            tags:
+                - admin
+        post:
+            consumes:
+                - multipart/form-data
+                - application/json
+            operationId: domainPermissionDraftCreate
+            parameters:
+                - description: Domain to create the permission draft for.
+                  in: formData
+                  name: domain
+                  type: string
+                - description: Create a draft "allow" or a draft "block".
+                  in: formData
+                  name: permission_type
+                  type: string
+                - description: Obfuscate the name of the domain when serving it publicly. Eg., `example.org` becomes something like `ex***e.org`.
+                  in: formData
+                  name: obfuscate
+                  type: boolean
+                - description: Public comment about this domain permission. This will be displayed alongside the domain permission if you choose to share permissions.
+                  in: formData
+                  name: public_comment
+                  type: string
+                - description: Private comment about this domain permission. Will only be shown to other admins, so this is a useful way of internally keeping track of why a certain domain ended up permissioned.
+                  in: formData
+                  name: private_comment
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: The newly created domain permission draft.
+                    schema:
+                        $ref: '#/definitions/domainPermission'
+                "400":
+                    description: bad request
+                "401":
+                    description: unauthorized
+                "403":
+                    description: forbidden
+                "406":
+                    description: not acceptable
+                "409":
+                    description: conflict
+                "500":
+                    description: internal server error
+            security:
+                - OAuth2 Bearer:
+                    - admin
+            summary: Create a domain permission draft with the given parameters.
+            tags:
+                - admin
+    /api/v1/admin/domain_permission_drafts/{id}:
+        get:
+            operationId: domainPermissionDraftGet
+            parameters:
+                - description: ID of the domain permission draft.
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: Domain permission draft.
+                    schema:
+                        $ref: '#/definitions/domainPermission'
+                "401":
+                    description: unauthorized
+                "403":
+                    description: forbidden
+                "404":
+                    description: not found
+                "406":
+                    description: not acceptable
+                "500":
+                    description: internal server error
+            security:
+                - OAuth2 Bearer:
+                    - admin
+            summary: Get domain permission draft with the given ID.
+            tags:
+                - admin
+    /api/v1/admin/domain_permission_drafts/{id}/accept:
+        post:
+            consumes:
+                - multipart/form-data
+                - application/json
+            operationId: domainPermissionDraftAccept
+            parameters:
+                - description: ID of the domain permission draft.
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+                - default: false
+                  description: If a domain permission already exists with the same domain and permission type as the draft, overwrite the existing permission with fields from the draft.
+                  in: formData
+                  name: overwrite
+                  type: boolean
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: The newly created domain permission.
+                    schema:
+                        $ref: '#/definitions/domainPermission'
+                "400":
+                    description: bad request
+                "401":
+                    description: unauthorized
+                "403":
+                    description: forbidden
+                "406":
+                    description: not acceptable
+                "409":
+                    description: conflict
+                "500":
+                    description: internal server error
+            security:
+                - OAuth2 Bearer:
+                    - admin
+            summary: Accept a domain permission draft, turning it into an enforced domain permission.
+            tags:
+                - admin
+    /api/v1/admin/domain_permission_drafts/{id}/remove:
+        post:
+            consumes:
+                - multipart/form-data
+                - application/json
+            operationId: domainPermissionDraftRemove
+            parameters:
+                - description: ID of the domain permission draft.
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+                - default: false
+                  description: When removing the domain permission draft, also create a domain ignore entry for the target domain, so that drafts will not be created for this domain in the future.
+                  in: formData
+                  name: ignore_target
+                  type: boolean
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: The removed domain permission draft.
+                    schema:
+                        $ref: '#/definitions/domainPermission'
+                "400":
+                    description: bad request
+                "401":
+                    description: unauthorized
+                "403":
+                    description: forbidden
+                "406":
+                    description: not acceptable
+                "409":
+                    description: conflict
+                "500":
+                    description: internal server error
+            security:
+                - OAuth2 Bearer:
+                    - admin
+            summary: Remove a domain permission draft, optionally ignoring all future drafts targeting the given domain.
             tags:
                 - admin
     /api/v1/admin/email/test:
