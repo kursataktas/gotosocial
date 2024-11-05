@@ -1958,7 +1958,7 @@ func (suite *InternalToFrontendTestSuite) TestInstanceV1ToFrontend() {
         "image/apng",
         "audio/ogg",
         "video/ogg",
-        "audio/x-m4a",
+        "audio/mp4",
         "video/mp4",
         "video/quicktime",
         "audio/x-ms-wma",
@@ -1968,10 +1968,10 @@ func (suite *InternalToFrontendTestSuite) TestInstanceV1ToFrontend() {
         "video/x-matroska"
       ],
       "image_size_limit": 41943040,
-      "image_matrix_limit": 16777216,
+      "image_matrix_limit": 9223372036854775807,
       "video_size_limit": 41943040,
-      "video_frame_rate_limit": 60,
-      "video_matrix_limit": 16777216
+      "video_frame_rate_limit": 9223372036854775807,
+      "video_matrix_limit": 9223372036854775807
     },
     "polls": {
       "max_options": 6,
@@ -2103,7 +2103,7 @@ func (suite *InternalToFrontendTestSuite) TestInstanceV2ToFrontend() {
         "image/apng",
         "audio/ogg",
         "video/ogg",
-        "audio/x-m4a",
+        "audio/mp4",
         "video/mp4",
         "video/quicktime",
         "audio/x-ms-wma",
@@ -2113,10 +2113,10 @@ func (suite *InternalToFrontendTestSuite) TestInstanceV2ToFrontend() {
         "video/x-matroska"
       ],
       "image_size_limit": 41943040,
-      "image_matrix_limit": 16777216,
+      "image_matrix_limit": 9223372036854775807,
       "video_size_limit": 41943040,
-      "video_frame_rate_limit": 60,
-      "video_matrix_limit": 16777216
+      "video_frame_rate_limit": 9223372036854775807,
+      "video_matrix_limit": 9223372036854775807
     },
     "polls": {
       "max_options": 6,
