@@ -20,6 +20,7 @@
 module.exports = [
 	{
 		files: ["**/*.ts", "**/*.tsx"],
+		ignores: ["frontend/prism.js"], // vendored
 		languageOptions: {
 			parserOptions: {
 				project: true,
