@@ -24,7 +24,7 @@ import { Select, Checkbox } from "../../../../components/form/inputs";
 import Languages from "../../../../components/languages";
 import MutationButton from "../../../../components/form/mutation-button";
 import { useUpdateCredentialsMutation } from "../../../../lib/query/user";
-import { Account } from "../../../../lib/types/account";
+import type { Account } from "../../../../lib/types/account";
 
 export default function BasicSettings({ account }: { account: Account }) {
 	/* form keys
@@ -36,7 +36,7 @@ export default function BasicSettings({ account }: { account: Account }) {
 	const form = {
 		defaultPrivacy: useTextInput("source[privacy]", { source: account, defaultValue: "unlisted" }),
 		isSensitive: useBoolInput("source[sensitive]", { source: account }),
-		language: useTextInput("source[language]", { source: account, valueSelector: (s: Account) => s.source?.language?.toUpperCase() ?? "EN" }),
+		language: useTextInput("source[language]", { source: account, valueSelector: (s: Account) => s.source?.language.toUpperCase() ?? "EN" }),
 		statusContentType: useTextInput("source[status_content_type]", { source: account, defaultValue: "text/plain" }),
 	};
 	
@@ -52,7 +52,7 @@ export default function BasicSettings({ account }: { account: Account }) {
 					className="docslink"
 					rel="noreferrer"
 				>
-				Learn more about these settings (opens in a new tab)
+					Learn more about these settings (opens in a new tab)
 				</a>
 			</div>
 			<Select field={form.language} label="Default post language" options={

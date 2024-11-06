@@ -18,7 +18,7 @@
 */
 
 import { useState } from "react";
-import { CreateHookNames, HookOpts, RadioFormInputHook } from "./types";
+import type { CreateHookNames, HookOpts, RadioFormInputHook } from "./types";
 
 const _default = "";
 export default function useRadioInput(
@@ -26,7 +26,7 @@ export default function useRadioInput(
 	{
 		initialValue = _default,
 		options = {},
-	}: HookOpts<string>
+	}: HookOpts<string>,
 ): RadioFormInputHook {
 	const [value, setValue] = useState(initialValue);
 
@@ -44,8 +44,8 @@ export default function useRadioInput(
 		reset,
 		{
 			[name]: value,
-			[`set${Name}`]: setValue
-		}
+			[`set${Name}`]: setValue,
+		},
 	], {
 		onChange,
 		reset,
@@ -55,6 +55,6 @@ export default function useRadioInput(
 		setter: setValue,
 		options,
 		hasChanged: () => value != initialValue,
-		_default
+		_default,
 	});
 }

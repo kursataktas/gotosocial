@@ -26,9 +26,9 @@ const extended = gtsApi.injectEndpoints({
 				method: "POST",
 				url: `/api/v1/admin/media_cleanup`,
 				params: {
-					remote_cache_days: days
-				}
-			})
+					remote_cache_days: days,
+				},
+			}),
 		}),
 
 		instanceKeysExpire: build.mutation({
@@ -36,9 +36,9 @@ const extended = gtsApi.injectEndpoints({
 				method: "POST",
 				url: `/api/v1/admin/domain_keys_expire`,
 				params: {
-					domain: domain
-				}
-			})
+					domain: domain,
+				},
+			}),
 		}),
 
 		sendTestEmail: build.mutation<any, { email: string, message?: string }>({
@@ -46,7 +46,7 @@ const extended = gtsApi.injectEndpoints({
 				method: "POST",
 				url: `/api/v1/admin/email/test`,
 				params: params,
-			})
+			}),
 		}),
 	}),
 });

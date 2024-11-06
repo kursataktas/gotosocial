@@ -20,7 +20,7 @@
 import { useState } from "react";
 
 import { useComboboxState } from "ariakit/combobox";
-import {
+import type {
 	ComboboxFormInputHook,
 	CreateHookNames,
 	HookOpts,
@@ -29,14 +29,14 @@ import {
 const _default = "";
 export default function useComboBoxInput(
 	{ name, Name }: CreateHookNames,
-	{ initialValue = _default }: HookOpts<string>
+	{ initialValue = _default }: HookOpts<string>,
 ): ComboboxFormInputHook {
 	const [isNew, setIsNew] = useState(false);
 
 	const state = useComboboxState({
 		defaultValue: initialValue,
 		gutter: 0,
-		sameWidth: true
+		sameWidth: true,
 	});
 
 	function reset() {
@@ -50,18 +50,20 @@ export default function useComboBoxInput(
 			[name]: state.value,
 			name,
 			[`${name}IsNew`]: isNew,
-			[`set${Name}IsNew`]: setIsNew
-		}
+			[`set${Name}IsNew`]: setIsNew,
+		},
 	], {
 		reset,
 		name,
 		Name: "", // Will be set by inputHook function.
 		state,
 		value: state.value,
-		setter: (val: string) => state.setValue(val),
+		setter: (val: string) => {
+			state.setValue(val); 
+		},
 		hasChanged: () => state.value != initialValue,
 		isNew,
 		setIsNew,
-		_default
+		_default,
 	});
 }

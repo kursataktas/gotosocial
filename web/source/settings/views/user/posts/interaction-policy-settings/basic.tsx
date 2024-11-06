@@ -18,15 +18,16 @@
 */
 
 import React, { useMemo } from "react";
+import type {
+	InteractionPolicyValue} from "../../../../lib/types/interaction";
 import {
-	InteractionPolicyValue,
 	PolicyValueAuthor,
 	PolicyValueFollowers,
 	PolicyValueMentioned,
 	PolicyValuePublic,
 } from "../../../../lib/types/interaction";
 import { useTextInput } from "../../../../lib/form";
-import { Action, BasicValue, PolicyFormSub, Visibility } from "./types";
+import type { Action, BasicValue, PolicyFormSub, Visibility } from "./types";
 
 // Based on the given visibility, action, and states,
 // derives what the initial basic Select value should be.

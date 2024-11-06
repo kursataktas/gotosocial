@@ -20,8 +20,9 @@
 import { useMemo } from "react";
 
 import sanitize from "sanitize-html";
-import { compile, HtmlToTextOptions } from "html-to-text";
-import { Status } from "../../../lib/types/status";
+import type { HtmlToTextOptions } from "html-to-text";
+import { compile } from "html-to-text";
+import type { Status } from "../../../lib/types/status";
 
 // Options for converting HTML statuses
 // to plaintext representations.
@@ -29,7 +30,7 @@ const convertOptions: HtmlToTextOptions = {
 	selectors: [
 		// Don't fancy format links, just use their text value.
 		{ selector: 'a', options: { ignoreHref: true } },
-	]
+	],
 };
 const convertHTML = compile(convertOptions);
 

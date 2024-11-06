@@ -17,8 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { TextFormInputHook } from "../../../../lib/form/types";
-import React from "react";
+import type { TextFormInputHook } from "../../../../lib/form/types";
+import type React from "react";
 
 export interface PolicyFormSub {
 	field: TextFormInputHook;

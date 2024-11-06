@@ -25,7 +25,7 @@ import { useTextInput } from "../../../lib/form";
 import useFormSubmit from "../../../lib/form/submit";
 import { TextArea } from "../../../components/form/inputs";
 import MutationButton from "../../../components/form/mutation-button";
-import { InstanceRule, MappedRules } from "../../../lib/types/rules";
+import type { InstanceRule, MappedRules } from "../../../lib/types/rules";
 import FormWithData from "../../../lib/form/form-with-data";
 
 export default function InstanceRules() {
@@ -46,7 +46,9 @@ function InstanceRulesForm({ data: rules }: { data: MappedRules }) {
 
 	const [submitForm, result] = useFormSubmit({ newRule }, useAddInstanceRuleMutation(), {
 		changedOnly: true,
-		onFinish: () => newRule.reset()
+		onFinish: () => {
+			newRule.reset(); 
+		},
 	});
 
 	return (

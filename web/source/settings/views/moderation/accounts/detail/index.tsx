@@ -22,7 +22,7 @@ import React from "react";
 import { useGetAccountQuery } from "../../../../lib/query/admin";
 import FormWithData from "../../../../lib/form/form-with-data";
 import FakeProfile from "../../../../components/profile";
-import { AdminAccount } from "../../../../lib/types/account";
+import type { AdminAccount } from "../../../../lib/types/account";
 import { AccountActions } from "./actions";
 import { useParams } from "wouter";
 import { useBaseUrl } from "../../../../lib/navigation/util";
@@ -32,7 +32,7 @@ import { UseOurInstanceAccount, yesOrNo } from "../../../../lib/util";
 export default function AccountDetail() {
 	const params: { accountID: string } = useParams();
 	const baseUrl = useBaseUrl();
-	const backLocation: String = history.state?.backLocation ?? `~${baseUrl}`;
+	const backLocation: string = history.state?.backLocation ?? `~${baseUrl}`;
 
 	return (
 		<div className="account-detail">

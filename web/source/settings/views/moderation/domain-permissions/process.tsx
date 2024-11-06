@@ -17,8 +17,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
-import { memo, useMemo, useCallback, useEffect } from "react";
+import React, { memo, useMemo, useCallback, useEffect } from "react";
 import { isValidDomainPermission, hasBetterScope } from "../../../lib/util/domain-permission";
 
 import {
@@ -45,7 +44,7 @@ import FormWithData from "../../../lib/form/form-with-data";
 import { useImportDomainPermsMutation } from "../../../lib/query/admin/domain-permissions/import";
 import {
 	useDomainAllowsQuery,
-	useDomainBlocksQuery
+	useDomainBlocksQuery,
 } from "../../../lib/query/admin/domain-permissions/get";
 
 import type { DomainPerm, MappedDomainPerms } from "../../../lib/types/domain-permission";
@@ -68,7 +67,7 @@ export const ProcessImport = memo(
 				{...{ list, permType }}
 			/>
 		);
-	}
+	},
 );
 
 export interface ImportListProps {
@@ -111,22 +110,22 @@ function ImportList({ list, data: domainPerms, permType }: ImportListProps) {
 		domains: useCheckListInput("domains", { entries: list }), // DomainPerm is actually also a Checkable.
 		obfuscate: useBoolInput("obfuscate"),
 		privateComment: useTextInput("private_comment", {
-			defaultValue: `Imported on ${new Date().toLocaleString()}`
+			defaultValue: `Imported on ${new Date().toLocaleString()}`,
 		}),
 		privateCommentBehavior: useRadioInput("private_comment_behavior", {
 			defaultValue: "append",
 			options: {
 				append: "Append to",
-				replace: "Replace"
-			}
+				replace: "Replace",
+			},
 		}),
 		publicComment: useTextInput("public_comment"),
 		publicCommentBehavior: useRadioInput("public_comment_behavior", {
 			defaultValue: "append",
 			options: {
 				append: "Append to",
-				replace: "Replace"
-			}
+				replace: "Replace",
+			},
 		}),
 		permType: permType,
 	};
@@ -218,7 +217,7 @@ function DomainCheckList({ field, domainPerms, commentType, permType }: DomainCh
 	return (
 		<>
 			<CheckList
-				field={field as ChecklistInputHook}
+				field={field}
 				header={<>
 					<b>Domain</b>
 					<b>
@@ -252,7 +251,7 @@ const UpdateHint = memo(
 
 		function changeAll() {
 			updateMultiple(
-				entries.map((entry) => [entry.key, { domain: entry.suggest, suggest: null }])
+				entries.map((entry) => [entry.key, { domain: entry.suggest, suggest: null }]),
 			);
 		}
 
@@ -270,7 +269,7 @@ const UpdateHint = memo(
 				{entries.length > 0 && <a onClick={changeAll}>change all</a>}
 			</div>
 		);
-	}
+	},
 );
 
 interface UpdateableEntryProps {
@@ -290,7 +289,7 @@ const UpdateableEntry = memo(
 				}>change</a>
 			</>
 		);
-	}
+	},
 );
 
 function domainValidationError(isValid) {
@@ -312,7 +311,7 @@ function DomainEntry({ entry, onChange, extraProps: { alreadyExists, comment, pe
 		defaultValue: entry.domain,
 		showValidation: entry.checked,
 		initValidation: domainValidationError(entry.valid),
-		validator: (value) => domainValidationError(isValidDomainPermission(value))
+		validator: (value) => domainValidationError(isValidDomainPermission(value)),
 	});
 
 	useEffect(() => {

@@ -17,9 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useEffect } from "react";
 
-import { useEffect } from "react";
 import { useExportDomainListMutation } from "../../../lib/query/admin/domain-permissions/export";
 import useFormSubmit from "../../../lib/form/submit";
 import {
@@ -96,7 +95,9 @@ export default function ImportExportForm({ form, submitParse, parseResult }: Imp
 					<MutationButton
 						label="Import"
 						type="button"
-						onClick={() => submitParse()}
+						onClick={() => {
+							submitParse(); 
+						}}
 						result={parseResult}
 						showError={false}
 						disabled={form.permType.value === undefined || form.permType.value.length === 0}
@@ -116,7 +117,9 @@ export default function ImportExportForm({ form, submitParse, parseResult }: Imp
 					<MutationButton
 						label="Export"
 						type="button"
-						onClick={() => submitExport("export")}
+						onClick={() => {
+							submitExport("export"); 
+						}}
 						result={exportResult} showError={false}
 						disabled={form.permType.value === undefined || form.permType.value.length === 0}
 					/>
@@ -124,7 +127,9 @@ export default function ImportExportForm({ form, submitParse, parseResult }: Imp
 						label="Export to file"
 						wrapperClassName="export-file-button"
 						type="button"
-						onClick={() => submitExport("export-file")}
+						onClick={() => {
+							submitExport("export-file"); 
+						}}
 						result={exportResult}
 						showError={false}
 						disabled={form.permType.value === undefined || form.permType.value.length === 0}

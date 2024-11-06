@@ -17,12 +17,13 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { useMemo, useEffect, PropsWithChildren, ReactElement } from "react";
+import type { PropsWithChildren, ReactElement } from "react";
+import React, { useMemo, useEffect } from "react";
 import { matchSorter } from "match-sorter";
 import ComboBox from "../../../components/combo-box";
 import { useListEmojiQuery } from "../../../lib/query/admin/custom-emoji";
-import { CustomEmoji } from "../../../lib/types/custom-emoji";
-import { ComboboxFormInputHook } from "../../../lib/form/types";
+import type { CustomEmoji } from "../../../lib/types/custom-emoji";
+import type { ComboboxFormInputHook } from "../../../lib/form/types";
 import Loading from "../../../components/loading";
 import { Error } from "../../../components/error";
 
@@ -97,7 +98,7 @@ export function CategorySelect({ field, children }: PropsWithChildren<CategorySe
 						aria-hidden="true"
 					/>
 					{categoryName}
-				</>
+				</>,
 			]);
 		});
 

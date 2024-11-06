@@ -17,14 +17,15 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { ReactNode, useEffect, useMemo } from "react";
+import type { ReactNode} from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { useBoolInput, useTextInput } from "../../../lib/form";
 import { PageableList } from "../../../components/pageable-list";
 import MutationButton from "../../../components/form/mutation-button";
 import { useLocation, useSearch } from "wouter";
 import { useApproveInteractionRequestMutation, useLazySearchInteractionRequestsQuery, useRejectInteractionRequestMutation } from "../../../lib/query/user/interactions";
-import { InteractionRequest } from "../../../lib/types/interaction";
+import type { InteractionRequest } from "../../../lib/types/interaction";
 import { Checkbox } from "../../../components/form/inputs";
 import { useContent, useIcon, useNoun, useVerbed } from "./util";
 
@@ -46,16 +47,16 @@ export default function InteractionRequestsSearchForm() {
 	// urlQueryParams, to allow paging.
 	const form = {
 		statusID: useTextInput("status_id", {
-			defaultValue: urlQueryParams.get("status_id") ?? ""
+			defaultValue: urlQueryParams.get("status_id") ?? "",
 		}),
 		likes: useBoolInput("favourites", {
-			defaultValue: defaultTrue(urlQueryParams.get("favourites"))
+			defaultValue: defaultTrue(urlQueryParams.get("favourites")),
 		}),
 		replies: useBoolInput("replies", {
-			defaultValue: defaultTrue(urlQueryParams.get("replies"))
+			defaultValue: defaultTrue(urlQueryParams.get("replies")),
 		}),
 		boosts: useBoolInput("reblogs", {
-			defaultValue: defaultTrue(urlQueryParams.get("reblogs"))
+			defaultValue: defaultTrue(urlQueryParams.get("reblogs")),
 		}),
 	};
 
@@ -186,7 +187,7 @@ function ReqsListEntry({ req, linkTo, backLocation }: ReqsListEntryProps) {
 					// Store the back location in history so
 					// the detail view can use it to return to
 					// this page (including query parameters).
-					state: { backLocation: backLocation }
+					state: { backLocation: backLocation },
 				});
 			}}
 			role="link"

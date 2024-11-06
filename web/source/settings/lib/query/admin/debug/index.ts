@@ -17,7 +17,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { ApURLResponse } from "../../../types/debug";
+import type { ApURLResponse } from "../../../types/debug";
 import { gtsApi } from "../../gts-api";
 
 const extended = gtsApi.injectEndpoints({
@@ -32,13 +32,13 @@ const extended = gtsApi.injectEndpoints({
 				return {
 					url: `/api/v1/admin/debug/apurl?${urlParam.toString()}`,
 				};
-			}
+			},
 		}),
 		ClearCaches: build.mutation<{}, void>({
 			query: () => ({
 				method: "POST",
-				url: `/api/v1/admin/debug/caches/clear`
-			})
+				url: `/api/v1/admin/debug/caches/clear`,
+			}),
 		}),
 	}),
 });

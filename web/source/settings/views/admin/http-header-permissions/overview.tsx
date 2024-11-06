@@ -21,18 +21,18 @@ import React, { useMemo } from "react";
 import { useGetHeaderAllowsQuery, useGetHeaderBlocksQuery } from "../../../lib/query/admin/http-header-permissions";
 import { NoArg } from "../../../lib/types/query";
 import { PageableList } from "../../../components/pageable-list";
-import { HeaderPermission } from "../../../lib/types/http-header-permissions";
+import type { HeaderPermission } from "../../../lib/types/http-header-permissions";
 import { useLocation, useParams } from "wouter";
-import { PermType } from "../../../lib/types/perm";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { SerializedError } from "@reduxjs/toolkit";
+import type { PermType } from "../../../lib/types/perm";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { SerializedError } from "@reduxjs/toolkit";
 import HeaderPermCreateForm from "./create";
 
 export default function HeaderPermsOverview() {
 	const [ location, setLocation ] = useLocation();
 	
 	// Parse perm type from routing params.
-	let params = useParams();
+	const params = useParams();
 	if (params.permType !== "blocks" && params.permType !== "allows") {
 		throw "unrecognized perm type " + params.permType;
 	}
@@ -53,7 +53,7 @@ export default function HeaderPermsOverview() {
 		isFetching: isFetchingBlocks,
 		isSuccess: isSuccessBlocks,
 		isError: isErrorBlocks,
-		error: errorBlocks
+		error: errorBlocks,
 	} = useGetHeaderBlocksQuery(NoArg, { skip: permType !== "block" });
 
 	const {
@@ -62,7 +62,7 @@ export default function HeaderPermsOverview() {
 		isFetching: isFetchingAllows,
 		isSuccess: isSuccessAllows,
 		isError: isErrorAllows,
-		error: errorAllows
+		error: errorAllows,
 	} = useGetHeaderAllowsQuery(NoArg, { skip: permType !== "allow" });
 
 	const itemToEntry = (perm: HeaderPermission) => {
@@ -77,7 +77,7 @@ export default function HeaderPermsOverview() {
 						// Store the back location in
 						// history so the detail view
 						// can use it to return here.
-						state: { backLocation: location }
+						state: { backLocation: location },
 					});
 				}}
 				role="link"

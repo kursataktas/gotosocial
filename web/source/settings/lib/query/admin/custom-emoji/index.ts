@@ -18,8 +18,8 @@
 */
 
 import { gtsApi } from "../../gts-api";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { RootState } from "../../../../redux/store";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { RootState } from "../../../../redux/store";
 
 import type { CustomEmoji, EmojisFromItem, ListEmojiParams } from "../../../types/custom-emoji";
 
@@ -77,39 +77,39 @@ const extended = gtsApi.injectEndpoints({
 				url: "/api/v1/admin/custom_emojis",
 				params: {
 					limit: 0,
-					...params
-				}
+					...params,
+				},
 			}),
 			providesTags: (res, _error, _arg) =>
 				res
 					? [
 						...res.map((emoji) => ({ type: "Emoji" as const, id: emoji.id })),
-						{ type: "Emoji", id: "LIST" }
+						{ type: "Emoji", id: "LIST" },
 					]
-					: [{ type: "Emoji", id: "LIST" }]
+					: [{ type: "Emoji", id: "LIST" }],
 		}),
 
 		getEmoji: build.query<CustomEmoji, string>({
 			query: (id) => ({
-				url: `/api/v1/admin/custom_emojis/${id}`
+				url: `/api/v1/admin/custom_emojis/${id}`,
 			}),
-			providesTags: (_res, _error, id) => [{ type: "Emoji", id }]
+			providesTags: (_res, _error, id) => [{ type: "Emoji", id }],
 		}),
 
-		addEmoji: build.mutation<CustomEmoji, Object>({
+		addEmoji: build.mutation<CustomEmoji, object>({
 			query: (form) => {
 				return {
 					method: "POST",
 					url: `/api/v1/admin/custom_emojis`,
 					asForm: true,
 					body: form,
-					discardEmpty: true
+					discardEmpty: true,
 				};
 			},
 			invalidatesTags: (res) =>
 				res
 					? [{ type: "Emoji", id: "LIST" }, { type: "Emoji", id: res.id }]
-					: [{ type: "Emoji", id: "LIST" }]
+					: [{ type: "Emoji", id: "LIST" }],
 		}),
 
 		editEmoji: build.mutation<CustomEmoji, any>({
@@ -120,22 +120,22 @@ const extended = gtsApi.injectEndpoints({
 					asForm: true,
 					body: {
 						type: "modify",
-						...patch
-					}
+						...patch,
+					},
 				};
 			},
 			invalidatesTags: (res) =>
 				res
 					? [{ type: "Emoji", id: "LIST" }, { type: "Emoji", id: res.id }]
-					: [{ type: "Emoji", id: "LIST" }]
+					: [{ type: "Emoji", id: "LIST" }],
 		}),
 
 		deleteEmoji: build.mutation<any, string>({
 			query: (id) => ({
 				method: "DELETE",
-				url: `/api/v1/admin/custom_emojis/${id}`
+				url: `/api/v1/admin/custom_emojis/${id}`,
 			}),
-			invalidatesTags: (_res, _error, id) => [{ type: "Emoji", id }]
+			invalidatesTags: (_res, _error, id) => [{ type: "Emoji", id }],
 		}),
 
 		searchItemForEmoji: build.mutation<EmojisFromItem, string>({
@@ -145,10 +145,10 @@ const extended = gtsApi.injectEndpoints({
 				
 				// First search for given url.
 				const searchRes = await fetchWithBQ({
-					url: `/api/v2/search?q=${encodeURIComponent(url)}&resolve=true&limit=1`
+					url: `/api/v2/search?q=${encodeURIComponent(url)}&resolve=true&limit=1`,
 				});
 				if (searchRes.error) {
-					return { error: searchRes.error as FetchBaseQueryError };
+					return { error: searchRes.error };
 				}
 				
 				// Parse initial results of search.
@@ -178,8 +178,8 @@ const extended = gtsApi.injectEndpoints({
 								url: `/api/v1/admin/custom_emojis`,
 								params: {
 									filter: `domain:${domain},shortcode:${emoji.shortcode}`,
-									limit: 1
-								}
+									limit: 1,
+								},
 							});
 						
 							if (emojiRes.error) {
@@ -191,7 +191,7 @@ const extended = gtsApi.injectEndpoints({
 							
 							// Got it!
 							return emojiRes.data as CustomEmoji;
-						})
+						}),
 					)
 				).flatMap((emoji) => {
 					// Remove any nulls.
@@ -205,7 +205,7 @@ const extended = gtsApi.injectEndpoints({
 							status: 400,
 							statusText: 'Bad Request',
 							data: {
-								error: `One or more errors fetching custom emojis: [${errData}]`
+								error: `One or more errors fetching custom emojis: [${errData}]`,
 							},
 						},
 					};	
@@ -218,9 +218,9 @@ const extended = gtsApi.injectEndpoints({
 						type,
 						domain,
 						list: withIDs,
-					}
+					},
 				};
-			}
+			},
 		}),
 
 		patchRemoteEmojis: build.mutation({
@@ -231,7 +231,7 @@ const extended = gtsApi.injectEndpoints({
 				// Map function to get a promise
 				// of an emoji (or null).
 				const copyEmoji = async(emoji: CustomEmoji) => {
-					let body: {
+					const body: {
 						type: string;
 						shortcode?: string;
 						category?: string;
@@ -285,7 +285,7 @@ const extended = gtsApi.injectEndpoints({
 							status: 400,
 							statusText: 'Bad Request',
 							data: {
-								error: `One or more errors patching custom emojis: [${errData}]`
+								error: `One or more errors patching custom emojis: [${errData}]`,
 							},
 						},
 					};	
@@ -293,9 +293,9 @@ const extended = gtsApi.injectEndpoints({
 				
 				return { data };
 			},
-			invalidatesTags: () => [{ type: "Emoji", id: "LIST" }]
-		})
-	})
+			invalidatesTags: () => [{ type: "Emoji", id: "LIST" }],
+		}),
+	}),
 });
 
 /**

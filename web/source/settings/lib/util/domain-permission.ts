@@ -29,7 +29,7 @@ import { get } from "psl";
 export function isValidDomainPermission(domain: string): boolean {
 	return isValidDomain(domain, {
 		wildcard: false,
-		allowUnicode: true
+		allowUnicode: true,
 	});
 }
 

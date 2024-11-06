@@ -44,7 +44,7 @@ const extended = gtsApi.injectEndpoints({
 				}
 
 				return {
-					url: `/api/v1/admin/reports${query}`
+					url: `/api/v1/admin/reports${query}`,
 				};
 			},
 			// Headers required for paging.
@@ -56,15 +56,15 @@ const extended = gtsApi.injectEndpoints({
 			},
 			// Only provide LIST tag id since this model is not the
 			// same as getReport model (due to transformResponse).
-			providesTags: [{ type: "Report", id: "TRANSFORMED" }]
+			providesTags: [{ type: "Report", id: "TRANSFORMED" }],
 		}),
 
 		getReport: build.query<AdminReport, string>({
 			query: (id) => ({
-				url: `/api/v1/admin/reports/${id}`
+				url: `/api/v1/admin/reports/${id}`,
 			}),
 			providesTags: (_result, _error, id) => [
-				{ type: 'Report', id }
+				{ type: 'Report', id },
 			],
 		}),
 	
@@ -73,14 +73,14 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/admin/reports/${formData.id}/resolve`,
 				method: "POST",
 				asForm: true,
-				body: formData
+				body: formData,
 			}),
 			invalidatesTags: (res) =>
 				res
 					? [{ type: "Report", id: "TRANSFORMED" }, { type: "Report", id: res.id }]
-					: [{ type: "Report", id: "TRANSFORMED" }]
-		})
-	})
+					: [{ type: "Report", id: "TRANSFORMED" }],
+		}),
+	}),
 });
 
 /**

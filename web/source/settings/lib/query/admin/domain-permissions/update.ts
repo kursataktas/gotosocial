@@ -26,7 +26,7 @@ import {
 import { listToKeyedObject } from "../../transforms";
 import type {
 	DomainPerm,
-	MappedDomainPerms
+	MappedDomainPerms,
 } from "../../../types/domain-permission";
 
 const extended = gtsApi.injectEndpoints({
@@ -37,7 +37,7 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/admin/domain_blocks`,
 				asForm: true,
 				body: formData,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
 			transformResponse: listToKeyedObject<DomainPerm>("domain"),
 			...replaceCacheOnMutation("domainBlocks"),
@@ -49,10 +49,10 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/admin/domain_allows`,
 				asForm: true,
 				body: formData,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
 			transformResponse: listToKeyedObject<DomainPerm>("domain"),
-			...replaceCacheOnMutation("domainAllows")
+			...replaceCacheOnMutation("domainAllows"),
 		}),
 
 		removeDomainBlock: build.mutation<DomainPerm, string>({
@@ -63,8 +63,8 @@ const extended = gtsApi.injectEndpoints({
 			...removeFromCacheOnMutation("domainBlocks", {
 				key: (_draft, newData) => {
 					return newData.domain;
-				}
-			})
+				},
+			}),
 		}),
 
 		removeDomainAllow: build.mutation<DomainPerm, string>({
@@ -75,8 +75,8 @@ const extended = gtsApi.injectEndpoints({
 			...removeFromCacheOnMutation("domainAllows", {
 				key: (_draft, newData) => {
 					return newData.domain;
-				}
-			})
+				},
+			}),
 		}),
 	}),
 });
@@ -105,5 +105,5 @@ export {
 	useAddDomainBlockMutation,
 	useAddDomainAllowMutation,
 	useRemoveDomainBlockMutation,
-	useRemoveDomainAllowMutation
+	useRemoveDomainAllowMutation,
 };

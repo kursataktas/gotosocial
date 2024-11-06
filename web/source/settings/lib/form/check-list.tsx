@@ -38,20 +38,20 @@ import {
 
 const _default: { [k: string]: Checkable } = {};
 export default function useCheckListInput(
-	/* eslint-disable no-unused-vars */
+	 
 	{ name, Name }: CreateHookNames,
 	{
 		entries = [],
 		uniqueKey = "key",
 		initialValue = false,
-	}: HookOpts<boolean>
+	}: HookOpts<boolean>,
 ): ChecklistInputHook {
 	const [state, dispatch] = useChecklistReducer(entries, uniqueKey, initialValue);
 	const toggleAllRef = useRef<any>(null);
 
 	useEffect(() => {
 		if (toggleAllRef.current != null) {
-			let some = state.selectedEntries.size > 0;
+			const some = state.selectedEntries.size > 0;
 			let all = false;
 			if (some) {
 				all = state.selectedEntries.size == Object.values(state.entries).length;
@@ -64,18 +64,24 @@ export default function useCheckListInput(
 	}, [state.selectedEntries]);
 
 	const reset = useCallback(
-		() => dispatch(actions.updateAll(initialValue)),
-		[initialValue, dispatch]
+		() => {
+			dispatch(actions.updateAll(initialValue)); 
+		},
+		[initialValue, dispatch],
 	);
 
 	const onChange = useCallback(
-		(key: string, value: Checkable) => dispatch(actions.update({ key, value })),
-		[dispatch]
+		(key: string, value: Checkable) => {
+			dispatch(actions.update({ key, value })); 
+		},
+		[dispatch],
 	);
 
 	const updateMultiple = useCallback(
-		(entries: [key: string, value: Partial<Checkable>][]) => dispatch(actions.updateMultiple(entries)),
-		[dispatch]
+		(entries: [key: string, value: Partial<Checkable>][]) => {
+			dispatch(actions.updateMultiple(entries)); 
+		},
+		[dispatch],
 	);
 
 	return useMemo(() => {
@@ -89,14 +95,14 @@ export default function useCheckListInput(
 
 		function selectedValues() {
 			return Array.from((state.selectedEntries)).map((key) => ({
-				...state.entries[key] // returned as new object, because reducer state is immutable
+				...state.entries[key], // returned as new object, because reducer state is immutable
 			}));
 		}
 
 		return Object.assign([
 			state,
 			reset,
-			{ name }
+			{ name },
 		], {
 			_default,
 			hasChanged: () => true,
@@ -110,8 +116,8 @@ export default function useCheckListInput(
 			updateMultiple,
 			toggleAll: {
 				ref: toggleAllRef,
-				onChange: toggleAll
-			}
+				onChange: toggleAll,
+			},
 		});
 	}, [state, reset, name, onChange, updateMultiple, dispatch]);
 }

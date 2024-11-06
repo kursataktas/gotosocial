@@ -17,14 +17,12 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* eslint-disable no-unused-vars */
-
 import React from "react";
 
 import { Error } from "../../components/error";
 import Loading from "../../components/loading";
 import { NoArg } from "../types/query";
-import { FormWithDataQuery } from "./types";
+import type { FormWithDataQuery } from "./types";
 
 export interface FormWithDataProps {
 	dataQuery: FormWithDataQuery,

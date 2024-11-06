@@ -17,7 +17,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Draft } from "@reduxjs/toolkit";
+import type { Draft } from "@reduxjs/toolkit";
 
 /**
  * Pass into a query when you don't
@@ -46,25 +46,25 @@ interface MutationStartedParams {
 	/**
 	 * A method to get the current state for the store.
 	 */
-    getState,
+	getState,
 	/**
 	 * extra as provided as thunk.extraArgument to the configureStore getDefaultMiddleware option.
 	 */
-    extra,
+	extra,
 	/**
 	 * A unique ID generated for the query/mutation.
 	 */
-    requestId,
+	requestId,
 	/**
 	 *  A Promise that will resolve with a data property (the transformed query result), and a
 	 * meta property (meta returned by the baseQuery). If the query fails, this Promise will
 	 * reject with the error. This allows you to await for the query to finish.
 	 */
-    queryFulfilled,
+	queryFulfilled,
 	/**
 	 * A function that gets the current value of the cache entry.
 	 */
-    getCacheEntry,
+	getCacheEntry,
 }
 
 export type Action = (

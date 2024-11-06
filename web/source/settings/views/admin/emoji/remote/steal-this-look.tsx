@@ -64,7 +64,7 @@ export default function StealThisLook({ emojiCodes }) {
 								"fa fa-fw",
 								(result.isLoading
 									? "fa-refresh fa-spin"
-									: "fa-search")
+									: "fa-search"),
 							].join(" ")} aria-hidden="true" title="Search" />
 							<span className="sr-only">Search</span>
 						</button>
@@ -108,9 +108,9 @@ function CopyEmojiForm({ localEmojiCodes, type, emojiList }) {
 	const form = {
 		selectedEmoji: useCheckListInput("selectedEmoji", {
 			entries: emojiList,
-			uniqueKey: "id"
+			uniqueKey: "id",
 		}),
-		category: useComboBoxInput("category")
+		category: useComboBoxInput("category"),
 	};
 
 	const [formSubmit, result] = useFormSubmit(
@@ -126,18 +126,18 @@ function CopyEmojiForm({ localEmojiCodes, type, emojiList }) {
 					});
 					form.selectedEmoji.updateMultiple(processed);
 				}
-			}
-		}
+			},
+		},
 	);
 
 	const buttonsInactive = form.selectedEmoji.someSelected
 		? {
 			disabled: false,
-			title: ""
+			title: "",
 		}
 		: {
 			disabled: true,
-			title: "No emoji selected, cannot perform any actions"
+			title: "No emoji selected, cannot perform any actions",
 		};
 
 	const checkListExtraProps = useCallback(() => ({ localEmojiCodes }), [localEmojiCodes]);
@@ -205,7 +205,7 @@ function EmojiEntry({ entry: emoji, onChange, extraProps: { localEmojiCodes } })
 			return (emoji.checked && localEmojiCodes.has(code))
 				? "Shortcode already in use"
 				: "";
-		}
+		},
 	});
 
 	useEffect(() => {

@@ -17,9 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useMemo } from "react";
 
-import { useMemo } from "react";
 import { Link, useLocation, useParams } from "wouter";
 import { matchSorter } from "match-sorter";
 import { useTextInput } from "../../../lib/form";
@@ -28,14 +27,14 @@ import Loading from "../../../components/loading";
 import { useDomainAllowsQuery, useDomainBlocksQuery } from "../../../lib/query/admin/domain-permissions/get";
 import type { MappedDomainPerms } from "../../../lib/types/domain-permission";
 import { NoArg } from "../../../lib/types/query";
-import { PermType } from "../../../lib/types/perm";
+import type { PermType } from "../../../lib/types/perm";
 import { useBaseUrl } from "../../../lib/navigation/util";
 
 export default function DomainPermissionsOverview() {	
 	const baseUrl = useBaseUrl();
 	
 	// Parse perm type from routing params.
-	let params = useParams();
+	const params = useParams();
 	if (params.permType !== "blocks" && params.permType !== "allows") {
 		throw "unrecognized perm type " + params.permType;
 	}

@@ -56,7 +56,7 @@ function EditInstanceRuleForm({ rule }) {
 	const baseUrl = useBaseUrl();
 	const form = {
 		id: useValue("id", rule.id),
-		rule: useTextInput("text", { defaultValue: rule.text })
+		rule: useTextInput("text", { defaultValue: rule.text }),
 	};
 
 	const [submitForm, result] = useFormSubmit(form, useUpdateInstanceRuleMutation());

@@ -46,7 +46,7 @@ new PhotoswipeCaptionPlugin(lightbox, {
 	type: 'auto',
 	captionContent(slide) {
 		return slide.data.alt;
-	}
+	},
 });
 
 lightbox.addFilter('itemData', (item) => {
@@ -68,10 +68,10 @@ lightbox.addFilter('itemData', (item) => {
 				},
 				pause() {
 					el._player.pause();
-				}
+				},
 			},
 			width: parseInt(el.dataset.pswpWidth),
-			height: parseInt(el.dataset.pswpHeight)
+			height: parseInt(el.dataset.pswpHeight),
 		};
 	}
 	return item;
@@ -169,12 +169,12 @@ Array.from(document.getElementsByClassName("plyr-video")).forEach((video) => {
 					}, 1);
 				}
 				lightbox.loadAndOpen(parseInt(video.dataset.pswpIndex), {
-					gallery: video.closest(".photoswipe-gallery")
+					gallery: video.closest(".photoswipe-gallery"),
 				});
 
 				return false;
-			}
-		}
+			},
+		},
 	});
 
 	player.elements.container.title = video.title;

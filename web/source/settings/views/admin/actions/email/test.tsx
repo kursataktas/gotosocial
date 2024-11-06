@@ -30,7 +30,7 @@ export default function Test({}) {
 
 	const form = {
 		email: useTextInput("email", { defaultValue: instance?.email }),
-		message: useTextInput("message")
+		message: useTextInput("message"),
 	};
 
 	const [submit, result] = useFormSubmit(form, useSendTestEmailMutation(), { changedOnly: false });

@@ -19,14 +19,14 @@
 
 import React from "react";
 import { useVerifyCredentialsQuery } from "../lib/query/oauth";
-import { MediaAttachment, Status as StatusType } from "../lib/types/status";
+import type { MediaAttachment, Status as StatusType } from "../lib/types/status";
 import sanitize from "sanitize-html";
 
 export function FakeStatus({ children }) {
 	const { data: account = {
 		avatar: "/assets/default_avatars/GoToSocial_icon1.webp",
 		display_name: "",
-		username: ""
+		username: "",
 	} } = useVerifyCredentialsQuery();
 
 	return (

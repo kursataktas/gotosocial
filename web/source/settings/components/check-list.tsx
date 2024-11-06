@@ -17,10 +17,9 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { memo, useDeferredValue, useCallback, useMemo } from "react";
 
-import { memo, useDeferredValue, useCallback, useMemo } from "react";
-import { Checkable, ChecklistInputHook } from "../lib/form/types";
+import type { Checkable, ChecklistInputHook } from "../lib/form/types";
 
 interface CheckListProps {
 	field: ChecklistInputHook;
@@ -75,7 +74,7 @@ const CheckListEntries = memo(
 				getExtraProps={getExtraProps}
 			/>
 		));
-	}
+	},
 );
 
 interface CheckListEntryProps {
@@ -94,7 +93,7 @@ const CheckListEntry = memo(
 	function CheckListEntry({ entry, updateValue, getExtraProps, EntryComponent }: CheckListEntryProps) {
 		const onChange = useCallback(
 			(value) => updateValue(entry.key, value),
-			[updateValue, entry.key]
+			[updateValue, entry.key],
 		);
 
 		const extraProps = useMemo(() => getExtraProps?.(entry), [getExtraProps, entry]);
@@ -109,5 +108,5 @@ const CheckListEntry = memo(
 				<EntryComponent entry={entry} onChange={onChange} extraProps={extraProps} />
 			</label>
 		);
-	}
+	},
 );

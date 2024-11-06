@@ -21,7 +21,7 @@ import React from "react";
 import { all } from "langs";
 
 const asElements = all().map((l) => {
-	let code = l["1"].toUpperCase();
+	const code = l["1"].toUpperCase();
 	let name = l.name;
 	if (l.name != l.local) {
 		name = `${name} - ${l.local}`;

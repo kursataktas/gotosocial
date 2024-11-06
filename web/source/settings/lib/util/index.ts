@@ -19,7 +19,7 @@
 
 import { useMemo } from "react";
 
-import { AdminAccount } from "../types/account";
+import type { AdminAccount } from "../types/account";
 import { store } from "../../redux/store";
 
 export function yesOrNo(b: boolean): string {

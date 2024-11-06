@@ -27,7 +27,7 @@ import type {
 const _default = false;
 export default function useBoolInput(
 	{ name, Name }: CreateHookNames,
-	{ initialValue = _default }: HookOpts<boolean>
+	{ initialValue = _default }: HookOpts<boolean>,
 ): BoolFormInputHook {
 	const [value, setValue] = useState(initialValue);
 
@@ -45,8 +45,8 @@ export default function useBoolInput(
 		reset,
 		{
 			[name]: value,
-			[`set${Name}`]: setValue
-		}
+			[`set${Name}`]: setValue,
+		},
 	], {
 		name,
 		Name: "",
@@ -55,6 +55,6 @@ export default function useBoolInput(
 		value,
 		setter: setValue,
 		hasChanged: () => value != initialValue,
-		_default
+		_default,
 	});
 }

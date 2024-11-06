@@ -36,7 +36,7 @@ import { listToKeyedObject } from "../../transforms";
  * @returns 
  */
 function importEntriesProcessor(formData: ImportDomainPermsParams): (_entry: DomainPerm) => DomainPerm {
-	let processingFuncs: { (_entry: DomainPerm): void; }[] = [];
+	const processingFuncs: { (_entry: DomainPerm): void; }[] = [];
 
 	// Override each obfuscate entry if necessary.
 	if (formData.obfuscate !== undefined) {
@@ -49,7 +49,7 @@ function importEntriesProcessor(formData: ImportDomainPermsParams): (_entry: Dom
 	// Check whether we need to append or replace
 	// private_comment and public_comment.
 	["private_comment","public_comment"].forEach((commentType) => {
-		let text = formData.commentType?.trim();
+		const text = formData.commentType?.trim();
 		if (!text) {
 			return;
 		}
@@ -78,7 +78,9 @@ function importEntriesProcessor(formData: ImportDomainPermsParams): (_entry: Dom
 
 	return function process(entry) {
 		// Call all the assembled processing functions.
-		processingFuncs.forEach((f) => f(entry));
+		processingFuncs.forEach((f) => {
+			f(entry); 
+		});
 
 		// Unset all internal processing keys
 		// and any undefined keys on this entry.
@@ -111,7 +113,7 @@ const extended = gtsApi.injectEndpoints({
 							[JSON.stringify(domains)],
 							{ type: "application/json" },
 						),
-					}
+					},
 				};
 			},
 			transformResponse: listToKeyedObject<DomainPerm>("domain"),
@@ -125,8 +127,8 @@ const extended = gtsApi.injectEndpoints({
 					formData.permType.slice(1); 
 				return `domain${permType}s`;
 			}),
-		})
-	})
+		}),
+	}),
 });
 
 /**

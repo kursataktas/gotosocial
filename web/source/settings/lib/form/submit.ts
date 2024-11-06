@@ -60,7 +60,7 @@ interface UseFormSubmitOptions {
 export default function useFormSubmit(
 	form: HookedForm,
 	mutationQuery: readonly [MutationTrigger<any>, UseMutationStateResult<any, any>],
-	opts: UseFormSubmitOptions = { changedOnly: true }
+	opts: UseFormSubmitOptions = { changedOnly: true },
 ): [ FormSubmitFunction, FormSubmitResult ] {
 	if (!Array.isArray(mutationQuery)) {
 		throw "useFormSubmit: mutationQuery was not an Array. Is a valid useMutation RTK Query provided?";
@@ -90,7 +90,7 @@ export default function useFormSubmit(
 				// what at this point. If it's an empty string, fall back to undefined.
 				// 
 				// See: https://developer.mozilla.org/en-US/docs/Web/API/SubmitEvent/submitter
-				action = (e.nativeEvent.submitter as Object as { name: string }).name || undefined;
+				action = (e.nativeEvent.submitter as object as { name: string }).name || undefined;
 			} else {
 				// No submitter defined. Fall back
 				// to just use the FormSubmitEvent.
@@ -125,7 +125,7 @@ export default function useFormSubmit(
 				onFinish(res);
 			}
 		} catch (e) {
-			// eslint-disable-next-line no-console
+			 
 			console.error(`caught error running mutation: ${e}`);
 		}
 	};
@@ -134,7 +134,7 @@ export default function useFormSubmit(
 		submitForm,
 		{
 			...mutationResult,
-			action: usedAction.current
-		}
+			action: usedAction.current,
+		},
 	];
 }

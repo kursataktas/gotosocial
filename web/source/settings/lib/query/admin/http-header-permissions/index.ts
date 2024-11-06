@@ -18,7 +18,7 @@
 */
 
 import { gtsApi } from "../../gts-api";
-import { HeaderPermission } from "../../../types/http-header-permissions";
+import type { HeaderPermission } from "../../../types/http-header-permissions";
 
 const extended = gtsApi.injectEndpoints({
 	endpoints: (build) => ({
@@ -27,7 +27,7 @@ const extended = gtsApi.injectEndpoints({
 		
 		getHeaderAllows: build.query<HeaderPermission[], void>({
 			query: () => ({
-				url: `/api/v1/admin/header_allows`
+				url: `/api/v1/admin/header_allows`,
 			}),
 			providesTags: (res) =>
 				res
@@ -40,7 +40,7 @@ const extended = gtsApi.injectEndpoints({
 
 		getHeaderAllow: build.query<HeaderPermission, string>({
 			query: (id) => ({
-				url: `/api/v1/admin/header_allows/${id}`
+				url: `/api/v1/admin/header_allows/${id}`,
 			}),
 			providesTags: (_res, _error, id) => [{ type: "HTTPHeaderAllows", id }],
 		}),
@@ -51,7 +51,7 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/admin/header_allows`,
 				asForm: true,
 				body: formData,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
 			invalidatesTags: [{ type: "HTTPHeaderAllows", id: "LIST" }],
 		}),
@@ -59,7 +59,7 @@ const extended = gtsApi.injectEndpoints({
 		deleteHeaderAllow: build.mutation<HeaderPermission, string>({
 			query: (id) => ({
 				method: "DELETE",
-				url: `/api/v1/admin/header_allows/${id}`
+				url: `/api/v1/admin/header_allows/${id}`,
 			}),
 			invalidatesTags: (_res, _error, id) => [{ type: "HTTPHeaderAllows", id }],
 		}),
@@ -68,7 +68,7 @@ const extended = gtsApi.injectEndpoints({
 
 		getHeaderBlocks: build.query<HeaderPermission[], void>({
 			query: () => ({
-				url: `/api/v1/admin/header_blocks`
+				url: `/api/v1/admin/header_blocks`,
 			}),
 			providesTags: (res) =>
 				res
@@ -85,14 +85,14 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/admin/header_blocks`,
 				asForm: true,
 				body: formData,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
 			invalidatesTags: [{ type: "HTTPHeaderBlocks", id: "LIST" }],
 		}),
 
 		getHeaderBlock: build.query<HeaderPermission, string>({
 			query: (id) => ({
-				url: `/api/v1/admin/header_blocks/${id}`
+				url: `/api/v1/admin/header_blocks/${id}`,
 			}),
 			providesTags: (_res, _error, id) => [{ type: "HTTPHeaderBlocks", id }],
 		}),
@@ -100,7 +100,7 @@ const extended = gtsApi.injectEndpoints({
 		deleteHeaderBlock: build.mutation<HeaderPermission, string>({
 			query: (id) => ({
 				method: "DELETE",
-				url: `/api/v1/admin/header_blocks/${id}`
+				url: `/api/v1/admin/header_blocks/${id}`,
 			}),
 			invalidatesTags: (_res, _error, id) => [{ type: "HTTPHeaderBlocks", id }],
 		}),

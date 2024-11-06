@@ -23,7 +23,7 @@ import FormWithData from "../../../lib/form/form-with-data";
 import BackButton from "../../../components/back-button";
 import { useBaseUrl } from "../../../lib/navigation/util";
 import { useApproveInteractionRequestMutation, useGetInteractionRequestQuery, useRejectInteractionRequestMutation } from "../../../lib/query/user/interactions";
-import { InteractionRequest } from "../../../lib/types/interaction";
+import type { InteractionRequest } from "../../../lib/types/interaction";
 import { useIcon, useNoun, useVerbed } from "./util";
 import MutationButton from "../../../components/form/mutation-button";
 import { Status } from "../../../components/status";
@@ -31,7 +31,7 @@ import { Status } from "../../../components/status";
 export default function InteractionRequestDetail({ }) {
 	const params: { reqId: string } = useParams();
 	const baseUrl = useBaseUrl();
-	const backLocation: String = history.state?.backLocation ?? `~${baseUrl}`;
+	const backLocation: string = history.state?.backLocation ?? `~${baseUrl}`;
 
 	return (
 		<div className="interaction-request-detail">

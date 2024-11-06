@@ -24,7 +24,7 @@ import { TextInput, TextArea, FileInput } from "../../../components/form/inputs"
 import MutationButton from "../../../components/form/mutation-button";
 import { useInstanceV1Query } from "../../../lib/query/gts-api";
 import { useUpdateInstanceMutation } from "../../../lib/query/admin";
-import { InstanceV1 } from "../../../lib/types/instance";
+import type { InstanceV1 } from "../../../lib/types/instance";
 import FormWithData from "../../../lib/form/form-with-data";
 import useFormSubmit from "../../../lib/form/submit";
 
@@ -50,7 +50,7 @@ function InstanceSettingsForm({ data: instance }: InstanceSettingsFormProps) {
 	const form = {
 		title: useTextInput("title", {
 			source: instance,
-			validator: (val: string) => val.length <= titleLimit ? "" : `Instance title is ${val.length} characters; must be ${titleLimit} characters or less`
+			validator: (val: string) => val.length <= titleLimit ? "" : `Instance title is ${val.length} characters; must be ${titleLimit} characters or less`,
 		}),
 		thumbnail: useFileInput("thumbnail", { withPreview: true }),
 		thumbnailDesc: useTextInput("thumbnail_description", { source: instance }),
@@ -58,22 +58,22 @@ function InstanceSettingsForm({ data: instance }: InstanceSettingsFormProps) {
 			source: instance,
 			// Select "raw" text version of parsed field for editing.
 			valueSelector: (s: InstanceV1) => s.short_description_text,
-			validator: (val: string) => val.length <= shortDescLimit ? "" : `Instance short description is ${val.length} characters; must be ${shortDescLimit} characters or less`
+			validator: (val: string) => val.length <= shortDescLimit ? "" : `Instance short description is ${val.length} characters; must be ${shortDescLimit} characters or less`,
 		}),
 		description: useTextInput("description", {
 			source: instance,
 			// Select "raw" text version of parsed field for editing.
 			valueSelector: (s: InstanceV1) => s.description_text,
-			validator: (val: string) => val.length <= descLimit ? "" : `Instance description is ${val.length} characters; must be ${descLimit} characters or less`
+			validator: (val: string) => val.length <= descLimit ? "" : `Instance description is ${val.length} characters; must be ${descLimit} characters or less`,
 		}),
 		terms: useTextInput("terms", {
 			source: instance,
 			// Select "raw" text version of parsed field for editing.
 			valueSelector: (s: InstanceV1) => s.terms_text,
-			validator: (val: string) => val.length <= termsLimit ? "" : `Instance terms and conditions is ${val.length} characters; must be ${termsLimit} characters or less`
+			validator: (val: string) => val.length <= termsLimit ? "" : `Instance terms and conditions is ${val.length} characters; must be ${termsLimit} characters or less`,
 		}),
 		contactUser: useTextInput("contact_username", { source: instance, valueSelector: (s) => s.contact_account?.username }),
-		contactEmail: useTextInput("contact_email", { source: instance, valueSelector: (s) => s.email })
+		contactEmail: useTextInput("contact_email", { source: instance, valueSelector: (s) => s.email }),
 	};
 
 	const [submitForm, result] = useFormSubmit(form, useUpdateInstanceMutation());
@@ -109,8 +109,8 @@ function InstanceSettingsForm({ data: instance }: InstanceSettingsFormProps) {
 				<div className="file-upload-with-preview">
 					<img
 						className="preview avatar"
-						src={form.thumbnail.previewValue ?? instance?.thumbnail}
-						alt={form.thumbnailDesc.value ?? (instance?.thumbnail ? `Thumbnail image for the instance` : "No instance thumbnail image set")}
+						src={form.thumbnail.previewValue ?? instance.thumbnail}
+						alt={form.thumbnailDesc.value ?? (instance.thumbnail ? `Thumbnail image for the instance` : "No instance thumbnail image set")}
 					/>
 					<div className="file-input-with-image-description">
 						<FileInput

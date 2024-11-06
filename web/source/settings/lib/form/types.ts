@@ -17,18 +17,15 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-/* eslint-disable no-unused-vars */
-
-import { ComboboxState } from "ariakit";
-import React from "react";
-
-import {
+import type { ComboboxState } from "ariakit";
+import type React, {
 	ChangeEventHandler,
 	Dispatch,
 	RefObject,
 	SetStateAction,
 	SyntheticEvent,
 } from "react";
+
 
 export interface CreateHookNames {
 	name: string;
@@ -225,9 +222,9 @@ export interface ChecklistInputHook<T = Checkable> extends FormInputHook<{[k: st
 	_withSelectedFieldValues,
 	_withSomeSelected,
 	_withUpdateMultiple {
-		// Uses its own funky onChange handler.
-		onChange: (key: any, value: any) => void
-	}
+	// Uses its own funky onChange handler.
+	onChange: (key: any, value: any) => void
+}
 
 export type AnyFormInputHook = 
 	FormInputHook |

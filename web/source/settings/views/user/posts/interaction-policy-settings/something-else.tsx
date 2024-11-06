@@ -18,9 +18,10 @@
 */
 
 import React, { useMemo } from "react";
-import { InteractionPolicyValue, PolicyValueFollowers, PolicyValueFollowing, PolicyValuePublic } from "../../../../lib/types/interaction";
+import type { InteractionPolicyValue} from "../../../../lib/types/interaction";
+import { PolicyValueFollowers, PolicyValueFollowing, PolicyValuePublic } from "../../../../lib/types/interaction";
 import { useTextInput } from "../../../../lib/form";
-import { Action, Audience, PolicyFormSub, SomethingElseValue, Visibility } from "./types";
+import type { Action, Audience, PolicyFormSub, SomethingElseValue, Visibility } from "./types";
 
 export interface PolicyFormSomethingElse {
 	followers: PolicyFormSub,

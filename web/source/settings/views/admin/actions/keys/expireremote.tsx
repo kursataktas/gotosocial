@@ -47,7 +47,7 @@ export default function ExpireRemote({}) {
 			}
 
 			return "invalid domain";
-		}
+		},
 	});
 
 	const [expire, expireResult] = useInstanceKeysExpireMutation();

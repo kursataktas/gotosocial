@@ -28,7 +28,7 @@ export default function Import() {
 	const form = {
 		data: useFileInput("data"),
 		type: useTextInput("type", { defaultValue: "" }),
-		mode: useTextInput("mode", { defaultValue: "" })
+		mode: useTextInput("mode", { defaultValue: "" }),
 	};
 
 	const [submitForm, result] = useFormSubmit(form, useImportDataMutation(), {
@@ -37,7 +37,7 @@ export default function Import() {
 			form.data.reset();
 			form.type.reset();
 			form.mode.reset();
-		}
+		},
 	});
 	
 	return (

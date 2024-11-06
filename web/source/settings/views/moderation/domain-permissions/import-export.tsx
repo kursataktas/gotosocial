@@ -37,8 +37,8 @@ export default function ImportExport() {
 			options: {
 				block: "Domain blocks",
 				allow: "Domain allows",
-			}
-		})
+			},
+		}),
 	};
 
 	const [submitParse, parseResult] = useFormSubmit(form, useProcessDomainPermissionsMutation(), { changedOnly: false });

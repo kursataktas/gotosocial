@@ -86,13 +86,13 @@ function makeCacheMutation(action: Action): CacheMutation {
 								key = key(draft, newData);
 							}
 							action(draft, newData, { key });
-						})
+						}),
 					);
 				} catch (e) {
-					// eslint-disable-next-line no-console
+					 
 					console.error(`rolling back pessimistic update of ${queryName}: ${JSON.stringify(e)}`);
 				}
-			}
+			},
 		};
 	};
 }

@@ -17,12 +17,13 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
+import React from "react";
 import { useSearchAccountsQuery } from "../../../../lib/query/admin";
 import { PageableList } from "../../../../components/pageable-list";
 import { useLocation } from "wouter";
 import Username from "../../../../components/username";
-import { AdminAccount } from "../../../../lib/types/account";
+import type { AdminAccount } from "../../../../lib/types/account";
 
 export default function AccountsPending() {
 	const [ location, _setLocation ] = useLocation();

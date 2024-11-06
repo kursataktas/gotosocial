@@ -17,7 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { ReactNode, useEffect, useMemo } from "react";
+import type { ReactNode} from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { useLazySearchAccountsQuery } from "../../../../lib/query/admin";
 import { useTextInput } from "../../../../lib/form";
@@ -25,7 +26,7 @@ import { PageableList } from "../../../../components/pageable-list";
 import { Select, TextInput } from "../../../../components/form/inputs";
 import MutationButton from "../../../../components/form/mutation-button";
 import { useLocation, useSearch } from "wouter";
-import { AdminAccount } from "../../../../lib/types/account";
+import type { AdminAccount } from "../../../../lib/types/account";
 import Username from "../../../../components/username";
 import isValidDomain from "is-valid-domain";
 
@@ -66,11 +67,11 @@ export function AccountSearchForm() {
 				}
 
 				return "invalid domain";
-			}
+			},
 		}),
 		email: useTextInput("email", { defaultValue: urlQueryParams.get("email") ?? ""}),
 		ip: useTextInput("ip", { defaultValue: urlQueryParams.get("ip") ?? ""}),
-		limit: useTextInput("limit", { defaultValue: urlQueryParams.get("limit") ?? "50"})
+		limit: useTextInput("limit", { defaultValue: urlQueryParams.get("limit") ?? "50"}),
 	};
 
 	// On mount, if urlQueryParams were provided,

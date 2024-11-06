@@ -28,7 +28,7 @@ import {
 import MutationButton from "../../../components/form/mutation-button";
 import useFormSubmit from "../../../lib/form/submit";
 import { useValue } from "../../../lib/form";
-import { AccountExportStats } from "../../../lib/types/account";
+import type { AccountExportStats } from "../../../lib/types/account";
 
 export default function Export({ exportStats }: { exportStats: AccountExportStats }) {
 	const [exportFollowing, exportFollowingResult] = useFormSubmit(
@@ -92,7 +92,7 @@ export default function Export({ exportStats }: { exportStats: AccountExportStat
 					className="docslink"
 					rel="noreferrer"
 				>
-				Learn more about this section (opens in a new tab)
+					Learn more about this section (opens in a new tab)
 				</a>
 			</div>
 			
@@ -105,7 +105,9 @@ export default function Export({ exportStats }: { exportStats: AccountExportStat
 						className="text-cutoff"
 						label="Download following.csv"
 						type="button"
-						onClick={() => exportFollowing()}
+						onClick={() => {
+							exportFollowing(); 
+						}}
 						result={exportFollowingResult}
 						showError={true}
 						disabled={exportStats.following_count === 0}
@@ -119,7 +121,9 @@ export default function Export({ exportStats }: { exportStats: AccountExportStat
 						className="text-cutoff"
 						label="Download followers.csv"
 						type="button"
-						onClick={() => exportFollowers()}
+						onClick={() => {
+							exportFollowers(); 
+						}}
 						result={exportFollowersResult}
 						showError={true}
 						disabled={exportStats.followers_count === 0}
@@ -133,7 +137,9 @@ export default function Export({ exportStats }: { exportStats: AccountExportStat
 						className="text-cutoff"
 						label="Download lists.csv"
 						type="button"
-						onClick={() => exportLists()}
+						onClick={() => {
+							exportLists(); 
+						}}
 						result={exportListsResult}
 						showError={true}
 						disabled={exportStats.lists_count === 0}
@@ -147,7 +153,9 @@ export default function Export({ exportStats }: { exportStats: AccountExportStat
 						className="text-cutoff"
 						label="Download blocks.csv"
 						type="button"
-						onClick={() => exportBlocks()}
+						onClick={() => {
+							exportBlocks(); 
+						}}
 						result={exportBlocksResult}
 						showError={true}
 						disabled={exportStats.blocks_count === 0}
@@ -161,7 +169,9 @@ export default function Export({ exportStats }: { exportStats: AccountExportStat
 						className="text-cutoff"
 						label="Download mutes.csv"
 						type="button"
-						onClick={() => exportMutes()}
+						onClick={() => {
+							exportMutes(); 
+						}}
 						result={exportMutesResult}
 						showError={true}
 						disabled={exportStats.mutes_count === 0}

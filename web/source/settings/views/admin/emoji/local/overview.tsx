@@ -27,7 +27,7 @@ import Loading from "../../../../components/loading";
 import { Error } from "../../../../components/error";
 import { TextInput } from "../../../../components/form/inputs";
 import { useListEmojiQuery } from "../../../../lib/query/admin/custom-emoji";
-import { CustomEmoji } from "../../../../lib/types/custom-emoji";
+import type { CustomEmoji } from "../../../../lib/types/custom-emoji";
 
 export default function EmojiOverview() {
 	const { data: emoji = [], isLoading, isError, error } = useListEmojiQuery({ filter: "domain:local" });
@@ -87,7 +87,7 @@ function EmojiList({ emoji }: EmojiListParams) {
 		// Filter from emojis in this category.
 		emojiByCategory.forEach((entries, category) => {
 			const filteredEntries = matchSorter(entries, filter, {
-				keys: ["shortcode"]
+				keys: ["shortcode"],
 			});
 
 			if (filteredEntries.length == 0) {
@@ -164,8 +164,12 @@ function EmojiPreview({ emoji }) {
 
 	return (
 		<img
-			onMouseEnter={() => { setAnimate(true); }}
-			onMouseLeave={() => { setAnimate(false); }}
+			onMouseEnter={() => {
+				setAnimate(true); 
+			}}
+			onMouseLeave={() => {
+				setAnimate(false); 
+			}}
 			src={animate ? emoji.url : emoji.static_url}
 			alt={emoji.shortcode}
 			title={emoji.shortcode}

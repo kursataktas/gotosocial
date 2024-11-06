@@ -21,9 +21,9 @@ import fileDownload from "js-file-download";
 import { unparse as csvUnparse } from "papaparse";
 
 import { gtsApi } from "../../gts-api";
-import { RootState } from "../../../../redux/store";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { DomainPerm, ExportDomainPermsParams } from "../../../types/domain-permission";
+import type { RootState } from "../../../../redux/store";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { DomainPerm, ExportDomainPermsParams } from "../../../types/domain-permission";
 
 interface _exportProcess {
 	transformEntry: (_entry: DomainPerm) => any;
@@ -45,11 +45,11 @@ function exportProcess(formData: ExportDomainPermsParams): _exportProcess {
 			transformEntry: (entry) => ({
 				domain: entry.domain,
 				public_comment: entry.public_comment,
-				obfuscate: entry.obfuscate
+				obfuscate: entry.obfuscate,
 			}),
 			stringify: (list) => JSON.stringify(list),
 			extension: ".json",
-			mime: "application/json"
+			mime: "application/json",
 		};
 	}
 	
@@ -61,7 +61,7 @@ function exportProcess(formData: ExportDomainPermsParams): _exportProcess {
 				false,                      // reject_media
 				false,                      // reject_reports
 				entry.public_comment ?? "", // public_comment
-				entry.obfuscate ?? false    // obfuscate
+				entry.obfuscate ?? false,    // obfuscate
 			],
 			stringify: (list) => csvUnparse({
 				fields: [
@@ -72,10 +72,10 @@ function exportProcess(formData: ExportDomainPermsParams): _exportProcess {
 					"#public_comment",
 					"#obfuscate",
 				],
-				data: list
+				data: list,
 			}),
 			extension: ".csv",
-			mime: "text/csv"
+			mime: "text/csv",
 		};
 	}
 
@@ -84,7 +84,7 @@ function exportProcess(formData: ExportDomainPermsParams): _exportProcess {
 		transformEntry: (entry) => entry.domain,
 		stringify: (list) => list.join("\n"),
 		extension: ".txt",
-		mime: "text/plain"
+		mime: "text/plain",
 	};
 }
 
@@ -98,7 +98,7 @@ const extended = gtsApi.injectEndpoints({
 				// we want the untransformed array version.
 				const permsRes = await fetchWithBQ({ url: `/api/v1/admin/domain_${formData.permType}s` });
 				if (permsRes.error) {
-					return { error: permsRes.error as FetchBaseQueryError };
+					return { error: permsRes.error };
 				}
 
 				// Process perms into desired export format.
@@ -130,16 +130,16 @@ const extended = gtsApi.injectEndpoints({
 				fileDownload(
 					exportAsString,
 					filename + process.extension,
-					process.mime
+					process.mime,
 				);
 
 				// js-file-download handles the
 				// nitty gritty for us, so we can
 				// just return null data.
 				return { data: null };
-			}
+			},
 		}),
-	})
+	}),
 });
 
 /**

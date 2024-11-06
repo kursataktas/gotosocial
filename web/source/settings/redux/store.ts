@@ -50,13 +50,13 @@ const persistedReducer = persistReducer({
 
 		// This is a cheeky workaround for
 		// redux-persist being a stickler.
-		let anyState = state as any; 
+		const anyState = state as any; 
 		if (anyState?.oauth != undefined) {
 			anyState.oauth.expectingRedirect = false;
 		}
 
 		return anyState;
-	}
+	},
 }, combinedReducers);
 
 export const store = configureStore({
@@ -71,10 +71,10 @@ export const store = configureStore({
 					PERSIST,
 					PURGE,
 					REGISTER,
-				]
-			}
+				],
+			},
 		}).concat(gtsApi.middleware);
-	}
+	},
 });
 
 export const persistor = persistStore(store);

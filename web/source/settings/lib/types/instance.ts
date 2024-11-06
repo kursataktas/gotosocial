@@ -18,80 +18,80 @@
 */
 
 export interface InstanceV1 {
-    uri:                    string;
-    account_domain:         string;
-    title:                  string;
-    description:            string;
-    description_text?:       string;
-    short_description:      string;
-    short_description_text?: string;
-    email:                  string;
-    version:                string;
-    debug?:                 boolean;
-    languages:              any[]; // TODO: define this
-    registrations:          boolean;
-    approval_required:      boolean;
-    invites_enabled:        boolean;
-    configuration:          InstanceConfiguration;
-    urls:                   InstanceUrls;
-    stats:                  InstanceStats;
-    thumbnail:              string;
-    contact_account:        Object; // TODO: define this.
-    max_toot_chars:         number;
-    rules:                  any[]; // TODO: define this
-    terms?:                 string;
-    terms_text?:             string;
+	uri:                    string;
+	account_domain:         string;
+	title:                  string;
+	description:            string;
+	description_text?:       string;
+	short_description:      string;
+	short_description_text?: string;
+	email:                  string;
+	version:                string;
+	debug?:                 boolean;
+	languages:              any[]; // TODO: define this
+	registrations:          boolean;
+	approval_required:      boolean;
+	invites_enabled:        boolean;
+	configuration:          InstanceConfiguration;
+	urls:                   InstanceUrls;
+	stats:                  InstanceStats;
+	thumbnail:              string;
+	contact_account:        object; // TODO: define this.
+	max_toot_chars:         number;
+	rules:                  any[]; // TODO: define this
+	terms?:                 string;
+	terms_text?:             string;
 }
 
 export interface InstanceConfiguration {
-    statuses:          InstanceStatuses;
-    media_attachments: InstanceMediaAttachments;
-    polls:             InstancePolls;
-    accounts:          InstanceAccounts;
-    emojis:            InstanceEmojis;
-    oidc_enabled?:     boolean;
+	statuses:          InstanceStatuses;
+	media_attachments: InstanceMediaAttachments;
+	polls:             InstancePolls;
+	accounts:          InstanceAccounts;
+	emojis:            InstanceEmojis;
+	oidc_enabled?:     boolean;
 }
 
 export interface InstanceAccounts {
-    allow_custom_css:   boolean;
-    max_featured_tags:  number;
-    max_profile_fields: number;
+	allow_custom_css:   boolean;
+	max_featured_tags:  number;
+	max_profile_fields: number;
 }
 
 export interface InstanceEmojis {
-    emoji_size_limit: number;
+	emoji_size_limit: number;
 }
 
 export interface InstanceMediaAttachments {
-    supported_mime_types:   string[];
-    image_size_limit:       number;
-    image_matrix_limit:     number;
-    video_size_limit:       number;
-    video_frame_rate_limit: number;
-    video_matrix_limit:     number;
+	supported_mime_types:   string[];
+	image_size_limit:       number;
+	image_matrix_limit:     number;
+	video_size_limit:       number;
+	video_frame_rate_limit: number;
+	video_matrix_limit:     number;
 }
 
 export interface InstancePolls {
-    max_options:               number;
-    max_characters_per_option: number;
-    min_expiration:            number;
-    max_expiration:            number;
+	max_options:               number;
+	max_characters_per_option: number;
+	min_expiration:            number;
+	max_expiration:            number;
 }
 
 export interface InstanceStatuses {
-    max_characters:              number;
-    max_media_attachments:       number;
-    characters_reserved_per_url: number;
-    supported_mime_types:        string[];
+	max_characters:              number;
+	max_media_attachments:       number;
+	characters_reserved_per_url: number;
+	supported_mime_types:        string[];
 }
 
 export interface InstanceStats {
-    domain_count: number;
-    status_count: number;
-    user_count:   number;
+	domain_count: number;
+	status_count: number;
+	user_count:   number;
 }
 
 export interface InstanceUrls {
-    streaming_api: string;
+	streaming_api: string;
 }
 

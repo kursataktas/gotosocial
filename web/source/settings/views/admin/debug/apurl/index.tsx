@@ -22,7 +22,7 @@ import { useTextInput } from "../../../../lib/form";
 import { useLazyApURLQuery } from "../../../../lib/query/admin/debug";
 import { TextInput } from "../../../../components/form/inputs";
 import MutationButton from "../../../../components/form/mutation-button";
-import { ApURLResponse } from "../../../../lib/types/debug";
+import type { ApURLResponse } from "../../../../lib/types/debug";
 import Loading from "../../../../components/loading";
 
 // Used for syntax highlighting of json result.

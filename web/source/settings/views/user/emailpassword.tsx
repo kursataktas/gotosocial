@@ -24,7 +24,7 @@ import { TextInput } from "../../components/form/inputs";
 import MutationButton from "../../components/form/mutation-button";
 import { useEmailChangeMutation, usePasswordChangeMutation, useUserQuery } from "../../lib/query/user";
 import Loading from "../../components/loading";
-import { User } from "../../lib/types/user";
+import type { User } from "../../lib/types/user";
 import { useInstanceV1Query } from "../../lib/query/gts-api";
 
 export default function EmailPassword() {
@@ -42,7 +42,7 @@ function PasswordChange() {
 	const {
 		data: instance,
 		isFetching: isFetchingInstance,
-		isLoading: isLoadingInstance
+		isLoading: isLoadingInstance,
 	} = useInstanceV1Query();
 	if (isFetchingInstance || isLoadingInstance) {
 		return <Loading />;
@@ -64,8 +64,8 @@ function PasswordChangeForm({ oidcEnabled }: { oidcEnabled?: boolean }) {
 					return "New password same as old password";
 				}
 				return "";
-			}
-		})
+			},
+		}),
 	};
 
 	const verifyNewPassword = useTextInput("verifyNewPassword", {
@@ -74,7 +74,7 @@ function PasswordChangeForm({ oidcEnabled }: { oidcEnabled?: boolean }) {
 				return "Passwords do not match";
 			}
 			return "";
-		}
+		},
 	});
 
 	const [submitForm, result] = useFormSubmit(form, usePasswordChangeMutation());
@@ -138,14 +138,14 @@ function EmailChange() {
 	const {
 		data: instance,
 		isFetching: isFetchingInstance,
-		isLoading: isLoadingInstance
+		isLoading: isLoadingInstance,
 	} = useInstanceV1Query();
 	
 	// Load user data.
 	const {
 		data: user,
 		isFetching: isFetchingUser,
-		isLoading: isLoadingUser
+		isLoading: isLoadingUser,
 	} = useUserQuery();
 
 	if (
@@ -170,7 +170,7 @@ function EmailChangeForm({user, oidcEnabled}: { user: User, oidcEnabled?: boolea
 	const form = {
 		currentEmail: useTextInput("current_email", {
 			defaultValue: user.email,
-			nosubmit: true
+			nosubmit: true,
 		}),
 		newEmail: useTextInput("new_email", {
 			validator: (value: string | undefined) => {

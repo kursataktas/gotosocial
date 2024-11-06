@@ -26,11 +26,12 @@ import {
 import Loading from "../../../../components/loading";
 import { Error } from "../../../../components/error";
 import MutationButton from "../../../../components/form/mutation-button";
-import {
+import type {
 	DefaultInteractionPolicies,
 	InteractionPolicy,
 	InteractionPolicyEntry,
-	InteractionPolicyValue,
+	InteractionPolicyValue} from "../../../../lib/types/interaction";
+import {
 	PolicyValueAuthor,
 	PolicyValueFollowers,
 	PolicyValueFollowing,
@@ -39,10 +40,11 @@ import {
 } from "../../../../lib/types/interaction";
 import { useTextInput } from "../../../../lib/form";
 import { Select } from "../../../../components/form/inputs";
-import { TextFormInputHook } from "../../../../lib/form/types";
+import type { TextFormInputHook } from "../../../../lib/form/types";
 import { useBasicFor } from "./basic";
-import { PolicyFormSomethingElse, useSomethingElseFor } from "./something-else";
-import { Action, PolicyFormSub, SomethingElseValue, Visibility } from "./types";
+import type { PolicyFormSomethingElse} from "./something-else";
+import { useSomethingElseFor } from "./something-else";
+import type { Action, PolicyFormSub, SomethingElseValue, Visibility } from "./types";
 
 export default function InteractionPolicySettings() {
 	const {
@@ -134,7 +136,7 @@ function InteractionPoliciesForm({ defaultPolicies }: InteractionPoliciesFormPro
 					these settings; they do not apply retroactively.
 					<br/>
 					The word "anyone" in the below options means <em>anyone with
-					permission to see the post</em>, taking account of blocks.
+						permission to see the post</em>, taking account of blocks.
 					<br/>
 					Bear in mind that no matter what you set below, you will always
 					be able to like, reply-to, and boost your own posts.

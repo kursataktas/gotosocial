@@ -17,9 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useState } from "react";
 
-import { useState } from "react";
 import prettierBytes from "prettier-bytes";
 
 import type {
@@ -35,8 +34,8 @@ export default function useFileInput(
 	{
 		withPreview,
 		maxSize,
-		initialInfo = "no file selected"
-	}: HookOpts<File>
+		initialInfo = "no file selected",
+	}: HookOpts<File>,
 ): FileFormInputHook {
 	const [file, setFile] = useState<File>();
 	const [imageURL, setImageURL] = useState<string>();
@@ -58,7 +57,7 @@ export default function useFileInput(
 			return;
 		}
 
-		let file = files[0];
+		const file = files[0];
 		setFile(file);
 
 		if (imageURL) {
@@ -76,7 +75,7 @@ export default function useFileInput(
 				<ErrorC
 					error={new Error(`file size ${sizePrettier} is larger than max size ${maxSizePrettier}`)}
 					reset={(reset)}
-				/>
+				/>,
 			);
 		} else {
 			setInfo(<>{file.name} ({sizePrettier})</>);
@@ -100,7 +99,7 @@ export default function useFileInput(
 			[name]: file,
 			[`${name}URL`]: imageURL,
 			[`${name}Info`]: infoComponent,
-		}
+		},
 	], {
 		onChange,
 		reset,

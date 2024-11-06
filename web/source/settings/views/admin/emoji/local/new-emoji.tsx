@@ -17,7 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { useMemo, useEffect, ReactNode } from "react";
+import type { ReactNode } from "react";
+import React, { useMemo, useEffect } from "react";
 import { useFileInput, useComboBoxInput } from "../../../../lib/form";
 import useShortcode from "./use-shortcode";
 import useFormSubmit from "../../../../lib/form/submit";
@@ -32,7 +33,7 @@ import prettierBytes from "prettier-bytes";
 export default function NewEmojiForm() {
 	const { data: instance } = useInstanceV1Query();
 	const emojiMaxSize = useMemo(() => {
-		return instance?.configuration?.emojis?.emoji_size_limit ?? 50 * 1024;
+		return instance?.configuration.emojis.emoji_size_limit ?? 50 * 1024;
 	}, [instance]);
 
 	const prettierMaxSize = useMemo(() => {
@@ -43,7 +44,7 @@ export default function NewEmojiForm() {
 		shortcode: useShortcode(),
 		image: useFileInput("image", {
 			withPreview: true,
-			maxSize: emojiMaxSize
+			maxSize: emojiMaxSize,
 		}),
 		category: useComboBoxInput("category"),
 	};
@@ -59,7 +60,7 @@ export default function NewEmojiForm() {
 				form.shortcode.reset();
 				form.image.reset();
 				form.category.reset();
-			}
+			},
 		},
 	);
 
@@ -70,7 +71,7 @@ export default function NewEmojiForm() {
 			(form.shortcode.value === undefined || form.shortcode.value.length === 0) &&
 			form.image.value !== undefined
 		) {
-			let [name, _ext] = form.image.value.name.split(".");
+			const [name, _ext] = form.image.value.name.split(".");
 			form.shortcode.setter(name);
 		}
 

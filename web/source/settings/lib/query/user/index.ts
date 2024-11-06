@@ -21,11 +21,11 @@ import { replaceCacheOnMutation } from "../query-modifiers";
 import { gtsApi } from "../gts-api";
 import type {
 	MoveAccountFormData,
-	UpdateAliasesFormData
+	UpdateAliasesFormData,
 } from "../../types/migration";
 import type { Theme } from "../../types/theme";
-import { User } from "../../types/user";
-import { DefaultInteractionPolicies, UpdateDefaultInteractionPolicies } from "../../types/interaction";
+import type { User } from "../../types/user";
+import type { DefaultInteractionPolicies, UpdateDefaultInteractionPolicies } from "../../types/interaction";
 
 const extended = gtsApi.injectEndpoints({
 	endpoints: (build) => ({
@@ -35,36 +35,36 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/accounts/update_credentials`,
 				asForm: true,
 				body: formData,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
-			...replaceCacheOnMutation("verifyCredentials")
+			...replaceCacheOnMutation("verifyCredentials"),
 		}),
 		
 		user: build.query<User, void>({
-			query: () => ({url: `/api/v1/user`})
+			query: () => ({url: `/api/v1/user`}),
 		}),
 		
 		passwordChange: build.mutation({
 			query: (data) => ({
 				method: "POST",
 				url: `/api/v1/user/password_change`,
-				body: data
-			})
+				body: data,
+			}),
 		}),
 		
 		emailChange: build.mutation<User, { password: string, new_email: string }>({
 			query: (data) => ({
 				method: "POST",
 				url: `/api/v1/user/email_change`,
-				body: data
+				body: data,
 			}),
-			...replaceCacheOnMutation("user")
+			...replaceCacheOnMutation("user"),
 		}),
 		
 		aliasAccount: build.mutation<any, UpdateAliasesFormData>({
 			async queryFn(formData, _api, _extraOpts, fetchWithBQ) {
 				// Pull entries out from the hooked form.
-				const entries: String[] = [];
+				const entries: string[] = [];
 				formData.also_known_as_uris.forEach(entry => {
 					if (entry) {
 						entries.push(entry);
@@ -76,28 +76,28 @@ const extended = gtsApi.injectEndpoints({
 					url: `/api/v1/accounts/alias`,
 					body: { also_known_as_uris: entries },
 				});
-			}
+			},
 		}),
 		
 		moveAccount: build.mutation<any, MoveAccountFormData>({
 			query: (data) => ({
 				method: "POST",
 				url: `/api/v1/accounts/move`,
-				body: data
-			})
+				body: data,
+			}),
 		}),
 
 		accountThemes: build.query<Theme[], void>({
 			query: () => ({
-				url: `/api/v1/accounts/themes`
-			})
+				url: `/api/v1/accounts/themes`,
+			}),
 		}),
 
 		defaultInteractionPolicies: build.query<DefaultInteractionPolicies, void>({
 			query: () => ({
-				url: `/api/v1/interaction_policies/defaults`
+				url: `/api/v1/interaction_policies/defaults`,
 			}),
-			providesTags: ["DefaultInteractionPolicies"]
+			providesTags: ["DefaultInteractionPolicies"],
 		}),
 
 		updateDefaultInteractionPolicies: build.mutation<DefaultInteractionPolicies, UpdateDefaultInteractionPolicies>({
@@ -106,7 +106,7 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/interaction_policies/defaults`,
 				body: data,
 			}),
-			...replaceCacheOnMutation("defaultInteractionPolicies")
+			...replaceCacheOnMutation("defaultInteractionPolicies"),
 		}),
 
 		resetDefaultInteractionPolicies: build.mutation<DefaultInteractionPolicies, void>({
@@ -115,9 +115,9 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/interaction_policies/defaults`,
 				body: {},
 			}),
-			invalidatesTags: ["DefaultInteractionPolicies"]
+			invalidatesTags: ["DefaultInteractionPolicies"],
 		}),
-	})
+	}),
 });
 
 export const {

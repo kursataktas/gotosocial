@@ -17,7 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { Component, ReactNode } from "react";
+import type { ReactNode } from "react";
+import React, { Component } from "react";
 
 
 interface ErrorBoundaryProps {
@@ -48,7 +49,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 	componentDidCatch(_e, info) {
 		this.setState({
 			...this.state,
-			componentStack: info.componentStack
+			componentStack: info.componentStack,
 		});
 	}
 
@@ -83,7 +84,7 @@ function ErrorFallback({ error, componentStack, resetErrorBoundary }) {
 
 					{componentStack && [
 						"\n\nComponent trace:",
-						componentStack
+						componentStack,
 					]}
 					{["\n\nError trace: ", error.stack]}
 				</pre>

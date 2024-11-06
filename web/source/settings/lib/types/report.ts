@@ -17,16 +17,16 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Links } from "parse-link-header";
-import { AdminAccount } from "./account";
-import { Status } from "./status";
+import type { Links } from "parse-link-header";
+import type { AdminAccount } from "./account";
+import type { Status } from "./status";
 
 /**
  * Admin model of a report. Differs from the client
  * model, which contains less detailed information.
  */
 export interface AdminReport {
-    /**
+	/**
 	 * ID of the report.
 	 */
 	id: string;
@@ -83,7 +83,7 @@ export interface AdminReport {
 	 * Rules broken according to the reporter, if any.
 	 * TODO: model this properly.
 	 */
-	rules: Object[];
+	rules: object[];
 	/**
 	 * Comment stored about what action (if any) was taken.
 	 */
@@ -94,7 +94,7 @@ export interface AdminReport {
  * Parameters for POST to /api/v1/admin/reports/{id}/resolve.
  */
 export interface AdminReportResolveParams {
-    /**
+	/**
 	 * The ID of the report to resolve.
 	 */
 	id: string;

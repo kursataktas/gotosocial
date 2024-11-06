@@ -17,9 +17,9 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Links } from "parse-link-header";
-import { Account } from "./account";
-import { Status } from "./status";
+import type { Links } from "parse-link-header";
+import type { Account } from "./account";
+import type { Status } from "./status";
 
 export interface DefaultInteractionPolicies {
 	direct: InteractionPolicy;
@@ -71,7 +71,7 @@ export {
  * Interaction request targeting a status by an account.
  */
 export interface InteractionRequest {
-    /**
+	/**
 	 * ID of the request.
 	 */
 	id: string;

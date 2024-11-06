@@ -28,14 +28,14 @@ import MutationButton from "../../../components/form/mutation-button";
 import Username from "../../../components/username";
 import { useGetReportQuery, useResolveReportMutation } from "../../../lib/query/admin/reports";
 import { useBaseUrl } from "../../../lib/navigation/util";
-import { AdminReport } from "../../../lib/types/report";
+import type { AdminReport } from "../../../lib/types/report";
 import { yesOrNo } from "../../../lib/util";
 import { Status } from "../../../components/status";
 
 export default function ReportDetail({ }) {
 	const params: { reportId: string } = useParams();
 	const baseUrl = useBaseUrl();
-	const backLocation: String = history.state?.backLocation ?? `~${baseUrl}`;
+	const backLocation: string = history.state?.backLocation ?? `~${baseUrl}`;
 
 	return (
 		<div className="report-detail">
@@ -200,7 +200,7 @@ function ReportHistory({ report, baseUrl, location }: ReportSectionProps) {
 function ReportActionForm({ report }) {
 	const form = {
 		id: useValue("id", report.id),
-		comment: useTextInput("action_taken_comment")
+		comment: useTextInput("action_taken_comment"),
 	};
 
 	const [submit, result] = useFormSubmit(form, useResolveReportMutation(), { changedOnly: false });
@@ -249,7 +249,7 @@ function ReportStatuses({ report }: { report: AdminReport }) {
 						<Status
 							key={status.id}
 							status={status}
-					 	/>
+						/>
 					);
 				})}
 			</ul>

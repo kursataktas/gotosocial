@@ -17,8 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Account } from "./account";
-import { CustomEmoji } from "./custom-emoji";
+import type { Account } from "./account";
+import type { CustomEmoji } from "./custom-emoji";
 
 export interface Status {
 	id: string;

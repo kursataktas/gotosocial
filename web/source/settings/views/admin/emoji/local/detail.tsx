@@ -47,7 +47,7 @@ export default function EmojiDetail() {
 function EmojiDetailForm({ data: emoji }) {
 	const { data: instance } = useInstanceV1Query();
 	const emojiMaxSize = useMemo(() => {
-		return instance?.configuration?.emojis?.emoji_size_limit ?? 50 * 1024;
+		return instance?.configuration.emojis.emoji_size_limit ?? 50 * 1024;
 	}, [instance]);
 
 	const baseUrl = useBaseUrl();
@@ -56,8 +56,8 @@ function EmojiDetailForm({ data: emoji }) {
 		category: useComboBoxInput("category", { source: emoji }),
 		image: useFileInput("image", {
 			withPreview: true,
-			maxSize: emojiMaxSize
-		})
+			maxSize: emojiMaxSize,
+		}),
 	};
 
 	const [modifyEmoji, result] = useFormSubmit(form, useEditEmojiMutation());

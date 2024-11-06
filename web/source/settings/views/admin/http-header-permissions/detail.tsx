@@ -19,11 +19,11 @@
 
 import React, { useEffect, useMemo } from "react";
 import { useLocation, useParams } from "wouter";
-import { PermType } from "../../../lib/types/perm";
+import type { PermType } from "../../../lib/types/perm";
 import { useDeleteHeaderAllowMutation, useDeleteHeaderBlockMutation, useGetHeaderAllowQuery, useGetHeaderBlockQuery } from "../../../lib/query/admin/http-header-permissions";
-import { HeaderPermission } from "../../../lib/types/http-header-permissions";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { SerializedError } from "@reduxjs/toolkit";
+import type { HeaderPermission } from "../../../lib/types/http-header-permissions";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { SerializedError } from "@reduxjs/toolkit";
 import Loading from "../../../components/loading";
 import { Error } from "../../../components/error";
 import { useLazyGetAccountQuery } from "../../../lib/query/admin";
@@ -42,7 +42,7 @@ Some Test Value
 Another Test Value`;
 
 export default function HeaderPermDetail() {
-	let params = useParams();
+	const params = useParams();
 	if (params.permType !== "blocks" && params.permType !== "allows") {
 		throw "unrecognized perm type " + params.permType;
 	}
@@ -50,7 +50,7 @@ export default function HeaderPermDetail() {
 		return params.permType?.slice(0, -1) as PermType;
 	}, [params]);
 
-	let permID = params.permId as string | undefined;
+	const permID = params.permId;
 	if (!permID) {
 		throw "no perm ID";
 	}
@@ -127,7 +127,7 @@ function PermDeets({
 			return <Loading />;
 		} else if (isErrorAccount || account === undefined) {
 			// Fall back to account ID.
-			return perm?.created_by;
+			return perm.created_by;
 		}
 
 		return (

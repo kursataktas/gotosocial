@@ -23,7 +23,7 @@ import { useTextInput } from "../../../lib/form";
 import useFormSubmit from "../../../lib/form/submit";
 import { TextInput } from "../../../components/form/inputs";
 import MutationButton from "../../../components/form/mutation-button";
-import { PermType } from "../../../lib/types/perm";
+import type { PermType } from "../../../lib/types/perm";
 import { RE2JS } from "re2js";
 
 export default function HeaderPermCreateForm({ permType }: { permType: PermType }) {
@@ -44,7 +44,7 @@ export default function HeaderPermCreateForm({ permType }: { permType: PermType 
 				}
 
 				return "";
-			}
+			},
 		}),
 		regex: useTextInput("regex", {
 			validator: (val: string) => {
@@ -63,7 +63,7 @@ export default function HeaderPermCreateForm({ permType }: { permType: PermType 
 				}
 
 				return "";
-			}
+			},
 		}),
 	};
 
@@ -101,7 +101,7 @@ export default function HeaderPermCreateForm({ permType }: { permType: PermType 
 				label={
 					<>
 						Header Name&nbsp;
-						 <a
+						<a
 							href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"
 							target="_blank"
 							className="docslink"

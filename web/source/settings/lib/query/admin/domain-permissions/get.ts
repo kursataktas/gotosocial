@@ -26,14 +26,14 @@ const extended = gtsApi.injectEndpoints({
 	endpoints: (build) => ({
 		domainBlocks: build.query<MappedDomainPerms, void>({
 			query: () => ({
-				url: `/api/v1/admin/domain_blocks`
+				url: `/api/v1/admin/domain_blocks`,
 			}),
 			transformResponse: listToKeyedObject<DomainPerm>("domain"),
 		}),
 
 		domainAllows: build.query<MappedDomainPerms, void>({
 			query: () => ({
-				url: `/api/v1/admin/domain_allows`
+				url: `/api/v1/admin/domain_allows`,
 			}),
 			transformResponse: listToKeyedObject<DomainPerm>("domain"),
 		}),

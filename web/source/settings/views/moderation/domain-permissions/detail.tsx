@@ -17,9 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from "react";
+import React, { useMemo } from "react";
 
-import { useMemo } from "react";
 import { useLocation, useParams, useSearch } from "wouter";
 
 import { useTextInput, useBoolInput } from "../../../lib/form";
@@ -34,18 +33,18 @@ import MutationButton from "../../../components/form/mutation-button";
 
 import { useDomainAllowsQuery, useDomainBlocksQuery } from "../../../lib/query/admin/domain-permissions/get";
 import { useAddDomainAllowMutation, useAddDomainBlockMutation, useRemoveDomainAllowMutation, useRemoveDomainBlockMutation } from "../../../lib/query/admin/domain-permissions/update";
-import { DomainPerm } from "../../../lib/types/domain-permission";
+import type { DomainPerm } from "../../../lib/types/domain-permission";
 import { NoArg } from "../../../lib/types/query";
 import { Error } from "../../../components/error";
 import { useBaseUrl } from "../../../lib/navigation/util";
-import { PermType } from "../../../lib/types/perm";
+import type { PermType } from "../../../lib/types/perm";
 import isValidDomain from "is-valid-domain";
 
 export default function DomainPermDetail() {
 	const baseUrl = useBaseUrl();
 	
 	// Parse perm type from routing params.
-	let params = useParams();
+	const params = useParams();
 	if (params.permType !== "blocks" && params.permType !== "allows") {
 		throw "unrecognized perm type " + params.permType;
 	}
@@ -132,7 +131,7 @@ function DomainPermForm({ defaultDomain, perm, permType }: DomainPermFormProps) 
 	const disabledForm = isExistingPerm
 		? {
 			disabled: true,
-			title: "Domain permissions currently cannot be edited."
+			title: "Domain permissions currently cannot be edited.",
 		}
 		: {
 			disabled: false,
@@ -164,11 +163,11 @@ function DomainPermForm({ defaultDomain, perm, permType }: DomainPermFormProps) 
 				}
 
 				return "invalid domain";
-			}
+			},
 		}),
 		obfuscate: useBoolInput("obfuscate", { source: perm }),
 		commentPrivate: useTextInput("private_comment", { source: perm }),
-		commentPublic: useTextInput("public_comment", { source: perm })
+		commentPublic: useTextInput("public_comment", { source: perm }),
 	};
 
 	// Check which perm type we're meant to be handling
@@ -221,11 +220,11 @@ function DomainPermForm({ defaultDomain, perm, permType }: DomainPermFormProps) 
 		// but if domain input changes, that doesn't match anymore
 		// and causes issues later on so, before submitting the form,
 		// silently change url, and THEN submit.
-		let correctUrl = `/${permType}s/${form.domain.value}`;
+		const correctUrl = `/${permType}s/${form.domain.value}`;
 		if (location != correctUrl) {
 			setLocation(correctUrl);
 		}
-		return submitForm(e);
+		submitForm(e);
 	}
 
 	return (

@@ -26,7 +26,7 @@ import type {
 import { serialize as serializeForm } from "object-to-formdata";
 import type { FetchBaseQueryMeta } from "@reduxjs/toolkit/dist/query/fetchBaseQuery";
 import type { RootState } from '../../redux/store';
-import { InstanceV1 } from '../types/instance';
+import type { InstanceV1 } from '../types/instance';
 
 /**
  * GTSFetchArgs extends standard FetchArgs used by
@@ -173,10 +173,10 @@ export const gtsApi = createApi({
 	endpoints: (build) => ({
 		instanceV1: build.query<InstanceV1, void>({
 			query: () => ({
-				url: `/api/v1/instance`
-			})
-		})
-	})
+				url: `/api/v1/instance`,
+			}),
+		}),
+	}),
 });
 
 /**

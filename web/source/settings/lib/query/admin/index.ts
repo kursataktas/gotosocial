@@ -20,8 +20,8 @@
 import { replaceCacheOnMutation, removeFromCacheOnMutation } from "../query-modifiers";
 import { gtsApi } from "../gts-api";
 import { listToKeyedObject } from "../transforms";
-import { ActionAccountParams, AdminAccount, HandleSignupParams, SearchAccountParams, SearchAccountResp } from "../../types/account";
-import { InstanceRule, MappedRules } from "../../types/rules";
+import type { ActionAccountParams, AdminAccount, HandleSignupParams, SearchAccountParams, SearchAccountResp } from "../../types/account";
+import type { InstanceRule, MappedRules } from "../../types/rules";
 import parse from "parse-link-header";
 
 const extended = gtsApi.injectEndpoints({
@@ -32,17 +32,17 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/instance`,
 				asForm: true,
 				body: formData,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
 			...replaceCacheOnMutation("instanceV1"),
 		}),
 
 		getAccount: build.query<AdminAccount, string>({
 			query: (id) => ({
-				url: `/api/v1/admin/accounts/${id}`
+				url: `/api/v1/admin/accounts/${id}`,
 			}),
 			providesTags: (_result, _error, id) => [
-				{ type: 'Account', id }
+				{ type: 'Account', id },
 			],
 		}),
 
@@ -61,7 +61,7 @@ const extended = gtsApi.injectEndpoints({
 				}
 
 				return {
-					url: `/api/v2/admin/accounts${query}`
+					url: `/api/v2/admin/accounts${query}`,
 				};
 			},
 			// Headers required for paging.
@@ -73,7 +73,7 @@ const extended = gtsApi.injectEndpoints({
 			},
 			// Only provide LIST tag id since this model is not the
 			// same as getAccount model (due to transformResponse).
-			providesTags: [{ type: "Account", id: "TRANSFORMED" }]
+			providesTags: [{ type: "Account", id: "TRANSFORMED" }],
 		}),
 
 		actionAccount: build.mutation<string, ActionAccountParams>({
@@ -83,8 +83,8 @@ const extended = gtsApi.injectEndpoints({
 				asForm: true,
 				body: {
 					type: action,
-					text: reason
-				}
+					text: reason,
+				},
 			}),
 			// Do an optimistic update on this account to mark
 			// it according to whatever action was submitted.
@@ -95,7 +95,7 @@ const extended = gtsApi.injectEndpoints({
 							draft.suspended = true;
 							draft.account.suspended = true;
 						}
-					})
+					}),
 				);
 
 				// Revert optimistic
@@ -105,7 +105,7 @@ const extended = gtsApi.injectEndpoints({
 				} catch {
 					patchResult.undo();
 				}
-			}
+			},
 		}),
 
 		handleSignup: build.mutation<AdminAccount, HandleSignupParams>({
@@ -124,7 +124,7 @@ const extended = gtsApi.injectEndpoints({
 					// Just invalidate this ID and getAccounts.
 					dispatch(extended.util.invalidateTags([
 						{ type: "Account", id: id },
-						{ type: "Account", id: "TRANSFORMED" }
+						{ type: "Account", id: "TRANSFORMED" },
 					]));
 					return;
 				}
@@ -132,7 +132,7 @@ const extended = gtsApi.injectEndpoints({
 				const patchResult = dispatch(
 					extended.util.updateQueryData("getAccount", id, (draft) => {
 						draft.approved = true;
-					})
+					}),
 				);
 
 				// Revert optimistic
@@ -142,14 +142,14 @@ const extended = gtsApi.injectEndpoints({
 				} catch {
 					patchResult.undo();
 				}
-			}
+			},
 		}),
 
 		instanceRules: build.query<MappedRules, void>({
 			query: () => ({
-				url: `/api/v1/admin/instance/rules`
+				url: `/api/v1/admin/instance/rules`,
 			}),
-			transformResponse: listToKeyedObject<InstanceRule>("id")
+			transformResponse: listToKeyedObject<InstanceRule>("id"),
 		}),
 
 		addInstanceRule: build.mutation<MappedRules, any>({
@@ -158,7 +158,7 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/admin/instance/rules`,
 				asForm: true,
 				body: formData,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
 			transformResponse: listToKeyedObject<InstanceRule>("id"),
 			...replaceCacheOnMutation("instanceRules"),
@@ -170,11 +170,11 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/admin/instance/rules/${id}`,
 				asForm: true,
 				body: edit,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
 			transformResponse: (data) => {
 				return {
-					[data.id]: data
+					[data.id]: data,
 				};
 			},
 			...replaceCacheOnMutation("instanceRules"),
@@ -183,13 +183,13 @@ const extended = gtsApi.injectEndpoints({
 		deleteInstanceRule: build.mutation({
 			query: (id) => ({
 				method: "DELETE",
-				url: `/api/v1/admin/instance/rules/${id}`
+				url: `/api/v1/admin/instance/rules/${id}`,
 			}),
 			...removeFromCacheOnMutation("instanceRules", {
 				key: (_draft, rule) => rule.id,
-			})
-		})
-	})
+			}),
+		}),
+	}),
 });
 
 export const {

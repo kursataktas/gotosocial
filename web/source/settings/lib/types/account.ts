@@ -17,8 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Links } from "parse-link-header";
-import { CustomEmoji } from "./custom-emoji";
+import type { Links } from "parse-link-header";
+import type { CustomEmoji } from "./custom-emoji";
 
 export interface AdminAccount {
 	id: string,

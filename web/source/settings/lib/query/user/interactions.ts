@@ -17,7 +17,7 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import {
+import type {
 	InteractionRequest,
 	SearchInteractionRequestsParams,
 	SearchInteractionRequestsResp,
@@ -33,7 +33,7 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/interaction_requests/${id}`,
 			}),
 			providesTags: (_result, _error, id) => [
-				{ type: 'InteractionRequest', id }
+				{ type: 'InteractionRequest', id },
 			],
 		}),
 		
@@ -52,7 +52,7 @@ const extended = gtsApi.injectEndpoints({
 				}
 
 				return {
-					url: `/api/v1/interaction_requests${query}`
+					url: `/api/v1/interaction_requests${query}`,
 				};
 			},
 			// Headers required for paging.
@@ -62,7 +62,7 @@ const extended = gtsApi.injectEndpoints({
 				const links = parse(linksStr);
 				return { requests, links };
 			},
-			providesTags: [{ type: "InteractionRequest", id: "TRANSFORMED" }]
+			providesTags: [{ type: "InteractionRequest", id: "TRANSFORMED" }],
 		}),
 
 		approveInteractionRequest: build.mutation<InteractionRequest, string>({
@@ -73,7 +73,7 @@ const extended = gtsApi.injectEndpoints({
 			invalidatesTags: (res) =>
 				res
 					? [{ type: "InteractionRequest", id: "TRANSFORMED" }, { type: "InteractionRequest", id: res.id }]
-					: [{ type: "InteractionRequest", id: "TRANSFORMED" }]
+					: [{ type: "InteractionRequest", id: "TRANSFORMED" }],
 		}),
 
 		rejectInteractionRequest: build.mutation<any, string>({
@@ -84,9 +84,9 @@ const extended = gtsApi.injectEndpoints({
 			invalidatesTags: (res) =>
 				res
 					? [{ type: "InteractionRequest", id: "TRANSFORMED" }, { type: "InteractionRequest", id: res.id }]
-					: [{ type: "InteractionRequest", id: "TRANSFORMED" }]
+					: [{ type: "InteractionRequest", id: "TRANSFORMED" }],
 		}),
-	})
+	}),
 });
 
 export const {

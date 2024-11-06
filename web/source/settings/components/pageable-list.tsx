@@ -17,12 +17,13 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
+import React from "react";
 import { useLocation } from "wouter";
 import { Error } from "./error";
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { Links } from "parse-link-header";
+import type { SerializedError } from "@reduxjs/toolkit";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { Links } from "parse-link-header";
 import Loading from "./loading";
 
 export interface PageableListProps<T> {

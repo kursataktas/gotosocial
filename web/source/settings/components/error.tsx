@@ -17,9 +17,10 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import React, { ReactNode } from "react";
+import type { SerializedError } from "@reduxjs/toolkit";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { ReactNode } from "react";
+import React from "react";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
 	return (
@@ -74,7 +75,7 @@ function Error({ error, reset }: ErrorProps) {
 		return null;
 	}
 	
-	/* eslint-disable-next-line no-console */
+	 
 	console.error("caught error: ", error);
 	
 	let message: ReactNode;

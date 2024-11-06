@@ -80,6 +80,6 @@ export default function useFieldArrayInput(
 			} else {
 				return [];
 			}
-		}
+		},
 	};
 }

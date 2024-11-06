@@ -17,7 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 /**
  * OAuthToken represents a response
@@ -78,8 +79,8 @@ export const oauthSlice = createSlice({
 			delete state.token;
 			delete state.app;
 			state.loginState = "logout";
-		}
-	}
+		},
+	},
 });
 
 export const {

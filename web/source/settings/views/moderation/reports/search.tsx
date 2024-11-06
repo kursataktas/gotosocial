@@ -17,7 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, { ReactNode, useEffect, useMemo } from "react";
+import type { ReactNode} from "react";
+import React, { useEffect, useMemo } from "react";
 
 import { useLazySearchReportsQuery } from "../../../lib/query/admin/reports";
 import { useTextInput } from "../../../lib/form";
@@ -26,7 +27,7 @@ import { Select } from "../../../components/form/inputs";
 import MutationButton from "../../../components/form/mutation-button";
 import { useLocation, useSearch } from "wouter";
 import Username from "../../../components/username";
-import { AdminReport } from "../../../lib/types/report";
+import type { AdminReport } from "../../../lib/types/report";
 
 export default function ReportsSearch() {
 	return (
@@ -61,7 +62,7 @@ function ReportSearchForm() {
 		resolved: useTextInput("resolved", { defaultValue: resolved }),
 		account_id: useTextInput("account_id", { defaultValue: urlQueryParams.get("account_id") ?? "" }),
 		target_account_id: useTextInput("target_account_id", { defaultValue: urlQueryParams.get("target_account_id") ?? "" }),
-		limit: useTextInput("limit", { defaultValue: urlQueryParams.get("limit") ?? "20" })
+		limit: useTextInput("limit", { defaultValue: urlQueryParams.get("limit") ?? "20" }),
 	};
 
 	const setResolved = form.resolved.setter;
@@ -196,7 +197,7 @@ function ReportListEntry({ report, linkTo, backLocation }: ReportEntryProps) {
 					// Store the back location in history so
 					// the detail view can use it to return to
 					// this page (including query parameters).
-					state: { backLocation: backLocation }
+					state: { backLocation: backLocation },
 				});
 			}}
 			role="link"

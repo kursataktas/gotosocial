@@ -19,7 +19,8 @@
 
 import { useLogoutMutation, useVerifyCredentialsQuery } from "../../lib/query/oauth";
 import { store } from "../../redux/store";
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
+import React from "react";
 
 import Login from "./login";
 import Loading from "../loading";

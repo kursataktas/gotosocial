@@ -18,7 +18,7 @@
 */
 
 import typia from "typia";
-import { PermType } from "./perm";
+import type { PermType } from "./perm";
 
 export const validateDomainPerms = typia.createValidate<DomainPerm[]>();
 

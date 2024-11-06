@@ -34,18 +34,17 @@ import {
 	TextArea,
 	FileInput,
 	Checkbox,
-	Select
+	Select,
 } from "../../components/form/inputs";
 
 import FormWithData from "../../lib/form/form-with-data";
 import FakeProfile from "../../components/profile";
 import MutationButton from "../../components/form/mutation-button";
 
-import { useAccountThemesQuery } from "../../lib/query/user";
-import { useUpdateCredentialsMutation } from "../../lib/query/user";
+import { useAccountThemesQuery , useUpdateCredentialsMutation } from "../../lib/query/user";
 import { useVerifyCredentialsQuery } from "../../lib/query/oauth";
 import { useInstanceV1Query } from "../../lib/query/gts-api";
-import { Account } from "../../lib/types/account";
+import type { Account } from "../../lib/types/account";
 
 export default function UserProfile() {
 	return (
@@ -78,18 +77,18 @@ function UserProfileForm({ data: profile }: UserProfileFormProps) {
 	const { data: instance } = useInstanceV1Query();
 	const instanceConfig = React.useMemo(() => {
 		return {
-			allowCustomCSS: instance?.configuration?.accounts?.allow_custom_css === true,
-			maxPinnedFields: instance?.configuration?.accounts?.max_profile_fields ?? 6
+			allowCustomCSS: instance?.configuration.accounts.allow_custom_css === true,
+			maxPinnedFields: instance?.configuration.accounts.max_profile_fields ?? 6,
 		};
 	}, [instance]);
 	
 	// Parse out available theme options into nice format.
 	const { data: themes } = useAccountThemesQuery();
 	const themeOptions = useMemo(() => {
-		let themeOptions = [
+		const themeOptions = [
 			<option key="" value="">
 				Default
-			</option>
+			</option>,
 		];
 
 		themes?.forEach((theme) => {
@@ -101,7 +100,7 @@ function UserProfileForm({ data: profile }: UserProfileFormProps) {
 			themeOptions.push(
 				<option key={value} value={value}>
 					{text}
-				</option>
+				</option>,
 			);
 		});
 
@@ -122,8 +121,8 @@ function UserProfileForm({ data: profile }: UserProfileFormProps) {
 		hideCollections: useBoolInput("hide_collections", { source: profile }),
 		webVisibility: useTextInput("web_visibility", { source: profile, valueSelector: (p) => p.source?.web_visibility }),
 		fields: useFieldArrayInput("fields_attributes", {
-			defaultValue: profile?.source?.fields,
-			length: instanceConfig.maxPinnedFields
+			defaultValue: profile.source?.fields,
+			length: instanceConfig.maxPinnedFields,
 		}),
 		customCSS: useTextInput("custom_css", { source: profile, nosubmit: !instanceConfig.allowCustomCSS }),
 		theme: useTextInput("theme", { source: profile }),
@@ -134,7 +133,7 @@ function UserProfileForm({ data: profile }: UserProfileFormProps) {
 		onFinish: () => {
 			form.avatar.reset();
 			form.header.reset();
-		}
+		},
 	});
 
 	const noAvatarSet = !profile.avatar_media_id;
@@ -322,7 +321,7 @@ function ProfileFields({ field: formField }) {
 function Field({ index, data }) {
 	const form = useWithFormContext(index, {
 		name: useTextInput("name", { defaultValue: data.name }),
-		value: useTextInput("value", { defaultValue: data.value })
+		value: useTextInput("value", { defaultValue: data.value }),
 	});
 
 	return (

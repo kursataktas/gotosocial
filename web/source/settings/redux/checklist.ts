@@ -17,7 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import type { Checkable } from "../lib/form/types";
 import { useReducer } from "react";
 
@@ -57,12 +58,12 @@ function initialHookState({
 			}
 		
 			return [ key, { ...entry, key, checked } ];
-		})
+		}),
 	);
 
 	return {
 		entries: mappedEntries,
-		selectedEntries
+		selectedEntries,
 	};
 }
 
@@ -81,7 +82,7 @@ const checklistSlice = createSlice({
 					}
 
 					return [entry.key, { ...entry, checked } ];
-				})
+				}),
 			);
 			
 			return { entries, selectedEntries };
@@ -97,7 +98,7 @@ const checklistSlice = createSlice({
 
 			state.entries[key] = {
 				...state.entries[key],
-				...value
+				...value,
 			};
 		},
 		updateMultiple: (state, { payload }: PayloadAction<Array<[key: string, value: Partial<Checkable>]>>) => {						
@@ -112,11 +113,11 @@ const checklistSlice = createSlice({
 
 				state.entries[key] = {
 					...state.entries[key],
-					...value
+					...value,
 				};
 			});
-		}
-	}
+		},
+	},
 });
 
 export const actions = checklistSlice.actions;
@@ -153,6 +154,6 @@ export const useChecklistReducer = (entries: Checkable[], uniqueKey: string, ini
 	return useReducer(
 		checklistSlice.reducer,
 		initialState,
-		(_) => initialHookState({ entries, uniqueKey, initialValue })
+		(_) => initialHookState({ entries, uniqueKey, initialValue }),
 	);
 };

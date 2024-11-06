@@ -19,7 +19,7 @@
 
 import React from "react";
 import { useLocation } from "wouter";
-import { AdminAccount } from "../lib/types/account";
+import type { AdminAccount } from "../lib/types/account";
 
 interface UsernameProps {
 	account: AdminAccount;
@@ -32,7 +32,7 @@ export default function Username({ account, linkTo, backLocation, classNames }: 
 	const [ _location, setLocation ] = useLocation();
 	
 	let className = "username-lozenge";
-	let isLocal = account.domain == null;
+	const isLocal = account.domain == null;
 
 	if (account.suspended) {
 		className += " suspended";
@@ -46,7 +46,7 @@ export default function Username({ account, linkTo, backLocation, classNames }: 
 		className = [ className, classNames ].flat().join(" ");
 	}
 
-	let icon = isLocal
+	const icon = isLocal
 		? { fa: "fa-home", info: "Local user" }
 		: { fa: "fa-external-link-square", info: "Remote user" };
 
@@ -71,7 +71,7 @@ export default function Username({ account, linkTo, backLocation, classNames }: 
 						// Store the back location in history so
 						// the detail view can use it to return to
 						// this page (including query parameters).
-						state: { backLocation: backLocation }
+						state: { backLocation: backLocation },
 					});
 				}}
 				role="link"

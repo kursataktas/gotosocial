@@ -26,7 +26,7 @@ const shortcodeRegex = /^\w{2,30}$/;
 
 export default function useShortcode() {
 	const { data: emoji = [] } = useListEmojiQuery({
-		filter: "domain:local"
+		filter: "domain:local",
 	});
 
 	const emojiCodes = useMemo(() => {
@@ -36,7 +36,9 @@ export default function useShortcode() {
 	return useTextInput("shortcode", {
 		validator: function validateShortcode(code) {
 			// technically invalid, but hacky fix to prevent validation error on page load
-			if (code == "") { return ""; }
+			if (code == "") {
+				return ""; 
+			}
 
 			if (emojiCodes.has(code)) {
 				return "Shortcode already in use";
@@ -51,6 +53,6 @@ export default function useShortcode() {
 			}
 
 			return "";
-		}
+		},
 	});
 }

@@ -17,7 +17,8 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, {
+import type React from "react";
+import {
 	useState,
 	useRef,
 	useTransition,
@@ -41,7 +42,7 @@ export default function useTextInput(
 		showValidation = true,
 		initValidation,
 		nosubmit = false,
-	}: HookOpts<string>
+	}: HookOpts<string>,
 ): TextFormInputHook {
 	const [text, setText] = useState(initialValue);
 	const textRef = useRef<HTMLInputElement>(null);
@@ -86,7 +87,7 @@ export default function useTextInput(
 			[`${name}Ref`]: textRef,
 			[`set${Name}`]: setText,
 			[`${name}Valid`]: valid,
-		}
+		},
 	], {
 		onChange,
 		reset,
@@ -97,8 +98,10 @@ export default function useTextInput(
 		ref: textRef,
 		setter: setText,
 		valid,
-		validate: () => setValidation(validator ? validator(text): ""),
+		validate: () => {
+			setValidation(validator ? validator(text): ""); 
+		},
 		hasChanged: () => text != initialValue,
-		_default
+		_default,
 	});
 }

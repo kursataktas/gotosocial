@@ -29,10 +29,10 @@ const prodCfg = {
 	transform: [
 		["@browserify/uglifyify", {
 			global: true,
-			exts: ".js"
+			exts: ".js",
 		}],
-		["@browserify/envify", { global: true }]
-	]
+		["@browserify/envify", { global: true }],
+	],
 };
 
 skulk({
@@ -42,8 +42,8 @@ skulk({
 	prodCfg: {
 		servers: {
 			express: false,
-			livereload: false
-		}
+			livereload: false,
+		},
 	},
 	servers: {
 		express: {
@@ -54,6 +54,8 @@ skulk({
 					delete proxyRes.headers['content-security-policy'];
 				},
 			},
+			assets: "/assets",
+		},
 	},
 	bundles: {
 		frontend: {
@@ -64,8 +66,8 @@ skulk({
 			transform: [
 				["babelify", {
 					global: true,
-					ignore: [/node_modules\/(?!(photoswipe.*))/]
-				}]
+					ignore: [/node_modules\/(?!(photoswipe.*))/],
+				}],
 			],
 		},
 		settings: {
@@ -75,7 +77,7 @@ skulk({
 			plugin: [
 				// Additional settings for TS are passed from tsconfig.json.
 				// See: https://github.com/TypeStrong/tsify#tsconfigjson
-				["tsify"]
+				["tsify"],
 			],
 			transform: [
 				// tsify is called before babelify, so we're just babelifying
@@ -83,28 +85,28 @@ skulk({
 				["babelify", {
 					global: true,
 					ignore: [/node_modules\/(?!(nanoid)|(wouter))/],
-				}]
+				}],
 			],
 			presets: [
 				"react",
 				["postcss", {
-					output: "settings-style.css"
-				}]
-			]
+					output: "settings-style.css",
+				}],
+			],
 		},
 		cssThemes: {
 			entryFiles: cssThemes,
 			outputFile: "_discard",
 			presets: [["postcss", {
-				output: "_split"
-			}]]
+				output: "_split",
+			}]],
 		},
 		css: {
 			entryFiles: cssFiles,
 			outputFile: "_discard",
 			presets: [["postcss", {
-				output: "style.css"
-			}]]
-		}
-	}
+				output: "style.css",
+			}]],
+		},
+	},
 });

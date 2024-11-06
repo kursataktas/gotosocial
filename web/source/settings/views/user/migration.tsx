@@ -142,8 +142,8 @@ function AlsoKnownAsURI({ index, data }) {
 }
 
 function MoveForm({ data: profile }) {
-	let urlStr = store.getState().oauth.instanceUrl ?? "";
-	let url = new URL(urlStr);
+	const urlStr = store.getState().oauth.instanceUrl ?? "";
+	const url = new URL(urlStr);
 	
 	const form = {
 		movedToURI: useTextInput("moved_to_uri", {
@@ -162,10 +162,10 @@ function MoveForm({ data: profile }) {
 			<div className="form-section-docs">
 				<h3>Move Account</h3>
 				<p>
-						For a move to be successful, you must have already set an alias from the
-						target account back to the account you're moving from (ie., this account),
-						using the settings panel of the instance on which the target account resides.
-						To do this, provide the following details to the other instance: 
+					For a move to be successful, you must have already set an alias from the
+					target account back to the account you're moving from (ie., this account),
+					using the settings panel of the instance on which the target account resides.
+					To do this, provide the following details to the other instance: 
 				</p>
 				<dl className="migration-details">
 					<div>

@@ -20,15 +20,15 @@
 import fileDownload from "js-file-download";
 
 import { gtsApi } from "../gts-api";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { AccountExportStats } from "../../types/account";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { AccountExportStats } from "../../types/account";
 
 const extended = gtsApi.injectEndpoints({
 	endpoints: (build) => ({
 		exportStats: build.query<AccountExportStats, void>({
 			query: () => ({
-				url: `/api/v1/exports/stats`
-			})
+				url: `/api/v1/exports/stats`,
+			}),
 		}),
 		
 		exportFollowing: build.mutation<string | null, void>({
@@ -38,7 +38,7 @@ const extended = gtsApi.injectEndpoints({
 					acceptContentType: "text/csv",
 				});
 				if (csvRes.error) {
-					return { error: csvRes.error as FetchBaseQueryError };
+					return { error: csvRes.error };
 				}
 
 				if (csvRes.meta?.response?.status !== 200) {
@@ -47,7 +47,7 @@ const extended = gtsApi.injectEndpoints({
 
 				fileDownload(csvRes.data, "following.csv", "text/csv");
 				return { data: null };
-			}
+			},
 		}),
 
 		exportFollowers: build.mutation<string | null, void>({
@@ -57,7 +57,7 @@ const extended = gtsApi.injectEndpoints({
 					acceptContentType: "text/csv",
 				});
 				if (csvRes.error) {
-					return { error: csvRes.error as FetchBaseQueryError };
+					return { error: csvRes.error };
 				}
 
 				if (csvRes.meta?.response?.status !== 200) {
@@ -66,7 +66,7 @@ const extended = gtsApi.injectEndpoints({
 
 				fileDownload(csvRes.data, "followers.csv", "text/csv");
 				return { data: null };
-			}
+			},
 		}),
 
 		exportLists: build.mutation<string | null, void>({
@@ -76,7 +76,7 @@ const extended = gtsApi.injectEndpoints({
 					acceptContentType: "text/csv",
 				});
 				if (csvRes.error) {
-					return { error: csvRes.error as FetchBaseQueryError };
+					return { error: csvRes.error };
 				}
 
 				if (csvRes.meta?.response?.status !== 200) {
@@ -85,7 +85,7 @@ const extended = gtsApi.injectEndpoints({
 
 				fileDownload(csvRes.data, "lists.csv", "text/csv");
 				return { data: null };
-			}
+			},
 		}),
 
 		exportBlocks: build.mutation<string | null, void>({
@@ -95,7 +95,7 @@ const extended = gtsApi.injectEndpoints({
 					acceptContentType: "text/csv",
 				});
 				if (csvRes.error) {
-					return { error: csvRes.error as FetchBaseQueryError };
+					return { error: csvRes.error };
 				}
 
 				if (csvRes.meta?.response?.status !== 200) {
@@ -104,7 +104,7 @@ const extended = gtsApi.injectEndpoints({
 
 				fileDownload(csvRes.data, "blocks.csv", "text/csv");
 				return { data: null };
-			}
+			},
 		}),
 
 		exportMutes: build.mutation<string | null, void>({
@@ -114,7 +114,7 @@ const extended = gtsApi.injectEndpoints({
 					acceptContentType: "text/csv",
 				});
 				if (csvRes.error) {
-					return { error: csvRes.error as FetchBaseQueryError };
+					return { error: csvRes.error };
 				}
 
 				if (csvRes.meta?.response?.status !== 200) {
@@ -123,7 +123,7 @@ const extended = gtsApi.injectEndpoints({
 
 				fileDownload(csvRes.data, "mutes.csv", "text/csv");
 				return { data: null };
-			}
+			},
 		}),
 
 		importData: build.mutation({
@@ -132,10 +132,10 @@ const extended = gtsApi.injectEndpoints({
 				url: `/api/v1/import`,
 				asForm: true,
 				body: formData,
-				discardEmpty: true
+				discardEmpty: true,
 			}),
 		}),
-	})
+	}),
 });
 
 export const {

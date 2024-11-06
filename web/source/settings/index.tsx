@@ -26,7 +26,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
 import { Authorization } from "./components/authorization";
 import Loading from "./components/loading";
-import { Account } from "./lib/types/account";
+import type { Account } from "./lib/types/account";
 import { BaseUrlContext, RoleContext, InstanceDebugContext } from "./lib/navigation/util";
 import { SidebarMenu } from "./lib/navigation/menu";
 import { Redirect, Route, Router } from "wouter";

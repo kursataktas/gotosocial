@@ -29,7 +29,7 @@ import { TextInput } from "../form/inputs";
 export default function Login({ }) {
 	const form = {
 		instance: useTextInput("instance", {
-			defaultValue: window.location.origin
+			defaultValue: window.location.origin,
 		}),
 		scopes: useValue("scopes", "user admin"),
 	};

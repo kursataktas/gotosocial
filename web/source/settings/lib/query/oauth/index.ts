@@ -25,8 +25,8 @@ import {
 	remove as oauthRemove,
 	authorize as oauthAuthorize,
 } from "../../../redux/oauth";
-import { RootState } from '../../../redux/store';
-import { Account } from '../../types/account';
+import type { RootState } from '../../../redux/store';
+import type { Account } from '../../types/account';
 
 export interface OauthTokenRequestBody {
 	client_id: string;
@@ -45,7 +45,7 @@ function getSettingsURL() {
 		 Also drops anything past /settings/, because authorization urls that are too long
 		 get rejected by GTS.
 	*/
-	let [pre, _past] = window.location.pathname.split("/settings");
+	const [pre, _past] = window.location.pathname.split("/settings");
 	return `${window.location.origin}${pre}/settings`;
 }
 
@@ -71,14 +71,14 @@ const extended = gtsApi.injectEndpoints({
 				// return a standard verify_credentials query.
 				if (oauthState.loginState != 'callback') {
 					return fetchWithBQ({
-						url: `/api/v1/accounts/verify_credentials`
+						url: `/api/v1/accounts/verify_credentials`,
 					});
 				}
 
 				// We're in the middle of an auth/callback flow.
 				// Try to retrieve callback code from URL query.
-				let urlParams = new URLSearchParams(window.location.search);
-				let code = urlParams.get("code");
+				const urlParams = new URLSearchParams(window.location.search);
+				const code = urlParams.get("code");
 				if (code == undefined) {
 					return {
 						error: {
@@ -91,7 +91,7 @@ const extended = gtsApi.injectEndpoints({
 				
 				// Retrieve app with which the
 				// callback code was generated.
-				let app = oauthState.app;
+				const app = oauthState.app;
 				if (app == undefined || app.client_id == undefined) {
 					return {
 						error: {
@@ -109,7 +109,7 @@ const extended = gtsApi.injectEndpoints({
 					client_secret: app.client_secret,
 					redirect_uri: SETTINGS_URL,
 					grant_type: "authorization_code",
-					code: code
+					code: code,
 				};
 
 				const tokenResult = await fetchWithBQ({
@@ -118,7 +118,7 @@ const extended = gtsApi.injectEndpoints({
 					body: tokenReqBody,
 				});
 				if (tokenResult.error) {
-					return { error: tokenResult.error as FetchBaseQueryError };
+					return { error: tokenResult.error };
 				}
 				
 				// Remove ?code= query param from
@@ -131,9 +131,9 @@ const extended = gtsApi.injectEndpoints({
 				// We're now authed! So return
 				// standard verify_credentials query.
 				return fetchWithBQ({
-					url: `/api/v1/accounts/verify_credentials`
+					url: `/api/v1/accounts/verify_credentials`,
 				});
-			}
+			},
 		}),
 
 		authorizeFlow: build.mutation({
@@ -147,7 +147,7 @@ const extended = gtsApi.injectEndpoints({
 				}
 
 				instanceUrl = new URL(formData.instance).origin;
-				if (oauthState?.instanceUrl == instanceUrl && oauthState.app) {
+				if (oauthState.instanceUrl == instanceUrl && oauthState.app) {
 					return { data: oauthState.app };
 				}
 				
@@ -159,31 +159,31 @@ const extended = gtsApi.injectEndpoints({
 						client_name: "GoToSocial Settings",
 						scopes: formData.scopes,
 						redirect_uris: SETTINGS_URL,
-						website: SETTINGS_URL
-					}
+						website: SETTINGS_URL,
+					},
 				});
 				if (appResult.error) {
-					return { error: appResult.error as FetchBaseQueryError };
+					return { error: appResult.error };
 				}
 
-				let app = appResult.data as any;
+				const app = appResult.data;
 
 				app.scopes = formData.scopes;
 				api.dispatch(oauthAuthorize({
 					instanceUrl: instanceUrl,
 					app: app,
 					loginState: "callback",
-					expectingRedirect: true
+					expectingRedirect: true,
 				}));
 
-				let url = new URL(instanceUrl);
+				const url = new URL(instanceUrl);
 				url.pathname = "/oauth/authorize";
 				url.searchParams.set("client_id", app.client_id);
 				url.searchParams.set("redirect_uri", SETTINGS_URL);
 				url.searchParams.set("response_type", "code");
 				url.searchParams.set("scope", app.scopes);
 				
-				let redirectURL = url.toString();
+				const redirectURL = url.toString();
 				window.location.assign(redirectURL);
 				return { data: null };
 			},
@@ -193,9 +193,9 @@ const extended = gtsApi.injectEndpoints({
 				api.dispatch(oauthRemove());
 				return { data: null };
 			},
-			invalidatesTags: ["Auth"]
-		})
-	})
+			invalidatesTags: ["Auth"],
+		}),
+	}),
 });
 
 export const {

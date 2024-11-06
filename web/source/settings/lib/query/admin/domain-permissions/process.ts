@@ -17,9 +17,10 @@
 	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import type {
+	ParseConfig as CSVParseConfig} from "papaparse";
 import {
-	ParseConfig as CSVParseConfig,
-	parse as csvParse
+	parse as csvParse,
 } from "papaparse";
 import { nanoid } from "nanoid";
 
@@ -75,7 +76,7 @@ function parseDomainList(list: string): DomainPerm[] {
 				"reject_reports": true,
 				"public_comment": false,
 				"obfuscate": true,
-			}
+			},
 		};
 		
 		const { data, errors } = csvParse(list, csvParseCfg);
@@ -119,7 +120,7 @@ function parseDomainList(list: string): DomainPerm[] {
 }
 
 function deduplicateDomainList(list: DomainPerm[]): DomainPerm[] {
-	let domains = new Set();
+	const domains = new Set();
 	return list.filter((entry) => {
 		if (domains.has(entry.domain)) {
 			return false;
@@ -168,9 +169,9 @@ const extended = gtsApi.injectEndpoints({
 				});
 				
 				return { data: validated };
-			}
-		})
-	})
+			},
+		}),
+	}),
 });
 
 /**

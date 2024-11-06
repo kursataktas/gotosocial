@@ -28,7 +28,7 @@ import {
 	useBoolInput,
 } from "../../../../lib/form";
 import { Checkbox, Select, TextInput } from "../../../../components/form/inputs";
-import { AdminAccount } from "../../../../lib/types/account";
+import type { AdminAccount } from "../../../../lib/types/account";
 import { useLocation } from "wouter";
 
 export interface AccountActionsProps {
@@ -65,7 +65,7 @@ export function AccountActions({ account, backLocation }: AccountActionsProps) {
 function ModerateAccount({ account }: { account: AdminAccount }) {
 	const form = {
 		id: useValue("id", account.id),
-		reason: useTextInput("text")
+		reason: useTextInput("text"),
 	};
 	
 	const reallySuspend = useBoolInput("reallySuspend");
@@ -96,7 +96,7 @@ function ModerateAccount({ account }: { account: AdminAccount }) {
 			/>
 			<div className="action-buttons">
 				<MutationButton
-					disabled={account.suspended || reallySuspend.value === undefined || reallySuspend.value === false}
+					disabled={account.suspended || reallySuspend.value === undefined || !reallySuspend.value}
 					label="Suspend"
 					name="suspend"
 					result={result}
@@ -140,7 +140,7 @@ function HandleSignup({ account, backLocation }: { account: AdminAccount, backLo
 				// redirect to accounts page.
 				setLocation(backLocation);
 			}
-		}
+		},
 	});
 
 	return (
